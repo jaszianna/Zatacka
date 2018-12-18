@@ -79,8 +79,8 @@ public class Main extends Application {
         public void run() {
             for (HumanPlayer hp : PlayerList) {
                 if (!hp.getLoser()) {
-                    hp.setX(hp.getX() + hp.getR() * Math.cos(hp.getAlpha()));
-                    hp.setY(hp.getY() + hp.getR() * Math.sin(hp.getAlpha()));
+                    hp.setX(hp.getX() + hp.getVelocity() * Math.cos(hp.getAlpha()));
+                    hp.setY(hp.getY() + hp.getVelocity() * Math.sin(hp.getAlpha()));
                     gc.setFill(hp.getColor());
                     gc.fillRoundRect(hp.getX() + 5, hp.getY() + 5, 10, 10, 10, 10);
                     if (!hp.IfLose(Marked, hp.getX() + 5, hp.getY() + 5, 5, hp.getAlpha())) {

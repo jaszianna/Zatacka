@@ -1,20 +1,19 @@
 package sample;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Player {
 private double x;
 private double y;
-private double r;
+private double velocity;
 private double alpha;
 private Color color;
 private Boolean Loser=false;
 
-    public Player(double x, double y, double r, double alpha, Color color) {
+    public Player(double x, double y, double velocity, double alpha, Color color) {
         this.x = x;
         this.y = y;
-        this.r = r;
+        this.velocity = velocity;
         this.alpha = alpha;
         this.color = color;
     }
@@ -35,12 +34,12 @@ private Boolean Loser=false;
         this.y = y;
     }
 
-    public double getR() {
-        return r;
+    public double getVelocity() {
+        return velocity;
     }
 
-    public void setR(double r) {
-        this.r = r;
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
     }
 
     public double getAlpha() {
