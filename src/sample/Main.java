@@ -113,7 +113,7 @@ public class Main extends Application {
 
         InitialiseTwoDefaultPlayers();
 
-        primaryStage.setTitle("Uwaga Kurwa!!!");
+        primaryStage.setTitle("Our Zatacka!!!");
         Group root = new Group();
         MakeCanvasAndGraphicsContext(1000, 1000, root);
         Timer timer = new Timer();
