@@ -25,6 +25,8 @@ public class Main extends Application {
 
     public GraphicsContext gc;
 
+    public List<HumanPlayer> PlayerList;
+
     public void MakeMarkedTab(int width, int height) {
         Marked = new Boolean[width][];
         for (int i = 0; i < width; i++) {
@@ -59,7 +61,8 @@ public class Main extends Application {
         return false;
     }
 
-    public void MakeCanvasAndGraphicsContext(int width, int height, Group root) {
+    public void MakeCanvasAndGraphicsContext(int width, int height, Group root)
+    {
         canvas = new Canvas(width, height);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.WHITE);
@@ -67,18 +70,17 @@ public class Main extends Application {
         root.getChildren().add(canvas);
     }
 
-    public List<HumanPlayer> PlayerList;
-
-    public void InitialiseTwoDefaultPlayers() {
+    public void InitialiseTwoDefaultPlayers()
+    {
         PlayerList = new LinkedList<HumanPlayer>();
-        PlayerList.add(new HumanPlayer(10, 10, 4, 0, Color.GREEN, KeyCode.LEFT, KeyCode.RIGHT));
-        PlayerList.add(new HumanPlayer(100, 100, 4, 2, Color.BLUE, KeyCode.A, KeyCode.D));
+        PlayerList.add(new HumanPlayer(400, 400, 0, Color.GREEN, KeyCode.LEFT, KeyCode.RIGHT));
+        PlayerList.add(new HumanPlayer(100, 100, 0, Color.BLUE, KeyCode.A, KeyCode.D));
     }
 
     TimerTask task = new TimerTask() {
         public void run() {
             for (HumanPlayer hp : PlayerList) {
-                if (!hp.getLoser()) {
+                if (!hp.getHasLost()) {
                     hp.setX(hp.getX() + hp.getVelocity() * Math.cos(hp.getAlpha()));
                     hp.setY(hp.getY() + hp.getVelocity() * Math.sin(hp.getAlpha()));
                     gc.setFill(hp.getColor());
@@ -90,6 +92,20 @@ public class Main extends Application {
             }
         }
     };
+    TimerTask makingATurn = new TimerTask()
+    {
+        public void run()
+        {
+            for (HumanPlayer hp : PlayerList)
+            {
+                if(hp.getTurningLeft() == true)
+                    hp.setAlpha(hp.getAlpha() - Math.PI / 30);
+                if(hp.getTurningRight() == true)
+                    hp.setAlpha(hp.getAlpha() + Math.PI / 30);
+            }
+        }
+    };
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -101,10 +117,13 @@ public class Main extends Application {
         Group root = new Group();
         MakeCanvasAndGraphicsContext(1000, 1000, root);
         Timer timer = new Timer();
+        Timer makingATurnTimer = new Timer();
+        makingATurnTimer.schedule(makingATurn, 10, 50);
         timer.schedule(task, 10, 50);
         Scene sc = new Scene(root);
         primaryStage.setScene(sc);
         primaryStage.show();
+        sc.setOnKeyReleased(new KeyReleased(PlayerList));
         sc.setOnKeyPressed(new KeyPressed(PlayerList));
     }
 }

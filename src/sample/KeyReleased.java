@@ -5,10 +5,10 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.List;
 
-public class KeyPressed implements EventHandler<KeyEvent>
+public class KeyReleased implements EventHandler<KeyEvent>
 {
     List<HumanPlayer> players;
-    KeyPressed(List<HumanPlayer> players)
+    KeyReleased(List<HumanPlayer> players)
     {
         this.players = players;
     }
@@ -17,16 +17,14 @@ public class KeyPressed implements EventHandler<KeyEvent>
     public void handle(KeyEvent event) {
         for(HumanPlayer p:players)
         {
-            if(event.getCode() == p.getLeft())
+            if(event.getCode()== p.getLeft())
             {
-                p.setTurningLeft(true);
+                p.setTurningLeft(false);
             }
             if(event.getCode()== p.getRight())
             {
-                p.setTurningRight(true);
+                p.setTurningRight(false);
             }
         }
     }
 }
-
-

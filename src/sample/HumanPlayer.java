@@ -3,29 +3,47 @@ package sample;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
-public class HumanPlayer extends Player{
-
+public class HumanPlayer extends Player
+{
     private KeyCode Left;
     private KeyCode Right;
-    public HumanPlayer(double x, double y, double r, double alpha, Color color, KeyCode left, KeyCode right) {
-        super(x, y, r, alpha, color);
+    private Boolean turningRight;
+    private Boolean turningLeft;
+
+
+    public HumanPlayer(double x, double y, double alpha, Color color, KeyCode left, KeyCode right) {
+        super(x, y, alpha, color);
         Left=left;
         Right=right;
+        turningRight = false;
+        turningLeft = false;
     }
 
     public KeyCode getLeft() {
         return Left;
     }
 
-    public void setLeft(KeyCode left) {
-        Left = left;
-    }
-
     public KeyCode getRight() {
         return Right;
     }
 
-    public void setRight(KeyCode right) {
-        Right = right;
+    public Boolean getTurningRight()
+    {
+        return turningRight;
+    }
+
+    public void setTurningRight(Boolean turningRight)
+    {
+        this.turningRight = turningRight;
+    }
+
+    public Boolean getTurningLeft()
+    {
+        return turningLeft;
+    }
+
+    public void setTurningLeft(Boolean turningLeft)
+    {
+        this.turningLeft = turningLeft;
     }
 }

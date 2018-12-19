@@ -2,18 +2,19 @@ package sample;
 
 import javafx.scene.paint.Color;
 
-public class Player {
+public class Player
+{
 private double x;
 private double y;
-private double velocity;
+private static double velocity = 4;
 private double alpha;
 private Color color;
-private Boolean Loser=false;
+private Boolean hasLost = false;
 
-    public Player(double x, double y, double velocity, double alpha, Color color) {
+    public Player(double x, double y, double alpha, Color color)
+    {
         this.x = x;
         this.y = y;
-        this.velocity = velocity;
         this.alpha = alpha;
         this.color = color;
     }
@@ -38,10 +39,6 @@ private Boolean Loser=false;
         return velocity;
     }
 
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
-    }
-
     public double getAlpha() {
         return alpha;
     }
@@ -54,10 +51,6 @@ private Boolean Loser=false;
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public Boolean IfLose(Boolean[][] Marked, double x, double y, double width, double Alpha) {
         for(double beta=Alpha-Math.PI/2;beta<Alpha+Math.PI/2;beta+=Math.PI/10)
         {
@@ -65,15 +58,15 @@ private Boolean Loser=false;
             double y1=y+width*Math.sin(beta);
             if(Marked[(int)Math.round(x1)][(int)Math.round(y1)])
             {
-                Loser=true;
+                hasLost =true;
                 return true;
             }
         }
         return false;
     }
 
-    public Boolean getLoser() {
-        return Loser;
+    public Boolean getHasLost() {
+        return hasLost;
     }
 
     public void MarkOnTab(Boolean[][] Marked, double x, double y, double r) {
