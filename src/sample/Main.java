@@ -38,7 +38,7 @@ public class Main extends Application {
 
     public List<HumanPlayer> PlayerList;
 
-    public KeyPressed KeyPress=null;
+    public KeyPressed KeyPress;
 
     public void MakeMarkedTab(int width, int height) {
         Marked = new Boolean[width][];
@@ -49,7 +49,6 @@ public class Main extends Application {
             }
         }
     }
-
 
     public void MakeCanvasAndGraphicsContext(int width, int height, Group root) {
         canvas = new Canvas(width, height);
@@ -100,10 +99,6 @@ public class Main extends Application {
                         if (!hp.IfLose(Marked, hp.getX() + 5, hp.getY() + 5, 5, hp.getAlpha())) {
                             hp.MarkOnTab(Marked, hp.getX() + 5, hp.getY() + 5, 5);
                         }
-                        if(hp.getTurningLeft() == true)
-                            hp.setAlpha(hp.getAlpha() - Math.PI / 30);
-                        if(hp.getTurningRight() == true)
-                            hp.setAlpha(hp.getAlpha() + Math.PI / 30);
                     }
                 }
             }
@@ -113,9 +108,13 @@ public class Main extends Application {
     {
         public void run()
         {
+            if(!(KeyPress==null) && !KeyPress.getPaused())
             for (HumanPlayer hp : PlayerList)
             {
-
+                if(hp.getTurningLeft() == true)
+                    hp.setAlpha(hp.getAlpha() - Math.PI / 15);
+                if(hp.getTurningRight() == true)
+                    hp.setAlpha(hp.getAlpha() + Math.PI / 15);
             }
         }
     };
@@ -134,7 +133,7 @@ public class Main extends Application {
         Timer timer = new Timer();
         Timer makingATurnTimer = new Timer();
         makingATurnTimer.schedule(makingATurn, 10, 50);
-        timer.schedule(task, 10, 50);
+        timer.schedule(task, 10, 20);
         Scene sc = new Scene(root);
         primaryStage.setScene(sc);
         primaryStage.show();

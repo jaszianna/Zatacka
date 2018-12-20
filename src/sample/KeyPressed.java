@@ -22,7 +22,7 @@ public class KeyPressed implements EventHandler<KeyEvent>
 
     @Override
     public void handle(KeyEvent event) {
-        if(event.getCode() == KeyCode.P)
+        if(event.getCode() == KeyCode.ENTER)
         {
             Paused=Paused==true?false:true;
         }

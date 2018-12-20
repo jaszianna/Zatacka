@@ -6,14 +6,13 @@ public class Player
 {
 private double x;
 private double y;
-private static double velocity = 4;
+private static double velocity = 3;
 private double alpha;
 private Color color;
 private Boolean hasLost = false;
 private int points;
 
-    public Player(double x, double y, double alpha, Color color)
-    {
+    public Player(double x, double y, double alpha, Color color) {
         this.x = x;
         this.y = y;
         this.alpha = alpha;
@@ -58,9 +57,10 @@ private int points;
         {
             double x1=x+width*Math.cos(beta);
             double y1=y+width*Math.sin(beta);
-            if(x1<=0||y1<=0||x1>=Marked.length-1||y1>=Marked[0].length-1||Marked[(int)Math.round(x1)][(int)Math.round(y1)])
+            if( x1<=0 || y1<=0 || x1>=Marked.length-1 || y1>=Marked[0].length-1 || Marked[(int)Math.round(x1)][(int)Math.round(y1)])
             {
-                hasLost =true;
+
+                hasLost = true;
                 return true;
             }
         }
@@ -90,8 +90,15 @@ private int points;
     {
         points += 1;
     }
+
     public void ResetPoints()
     {
         points = 0;
     }
+
+    public int getPoints() {
+        return points;
+    }
+
+
 }
