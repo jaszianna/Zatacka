@@ -1,11 +1,16 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.LinkedList;
@@ -65,9 +70,22 @@ public class Main extends Application {
     {
         canvas = new Canvas(width, height);
         gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.WHITE);
+        gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        root.getChildren().add(canvas);
+
+        SplitPane pane = new SplitPane();
+        pane.setOrientation(Orientation.HORIZONTAL);
+
+        AnchorPane pane1 = new AnchorPane();
+        pane1.getChildren().add(canvas);
+
+        AnchorPane pane2 = new AnchorPane();
+        pane2.getChildren().add(new ScrollBar());
+        pane.getItems().addAll(pane1, pane2);
+
+        root.getChildren().add(pane);
+
+
     }
 
     public void InitialiseTwoDefaultPlayers()
@@ -116,6 +134,7 @@ public class Main extends Application {
         primaryStage.setTitle("Our Zatacka!!!");
         Group root = new Group();
         MakeCanvasAndGraphicsContext(1000, 1000, root);
+
         Timer timer = new Timer();
         Timer makingATurnTimer = new Timer();
         makingATurnTimer.schedule(makingATurn, 10, 50);

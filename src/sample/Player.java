@@ -10,6 +10,7 @@ private static double velocity = 4;
 private double alpha;
 private Color color;
 private Boolean hasLost = false;
+private int points;
 
     public Player(double x, double y, double alpha, Color color)
     {
@@ -17,6 +18,7 @@ private Boolean hasLost = false;
         this.y = y;
         this.alpha = alpha;
         this.color = color;
+        points = 0;
     }
 
     public double getX() {
