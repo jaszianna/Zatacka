@@ -85,4 +85,13 @@ private int points;
             }
         }
     }
+
+    public void AddPoint()
+    {
+        points += 1;
+    }
+    public void ResetPoints()
+    {
+        points = 0;
+    }
 }

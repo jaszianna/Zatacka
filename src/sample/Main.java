@@ -6,12 +6,18 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +38,8 @@ public class Main extends Application {
 
     public List<HumanPlayer> PlayerList;
 
+    public KeyPressed KeyPress=null;
+
     public void MakeMarkedTab(int width, int height) {
         Marked = new Boolean[width][];
         for (int i = 0; i < width; i++) {
@@ -42,32 +50,8 @@ public class Main extends Application {
         }
     }
 
-    public void MarkOnTab(double x, double y, double r) {
-        int i0 = x - r > 0 ? (int) (x - r) : 0;
-        int j0 = y - r > 0 ? (int) (y - r) : 0;
-        int i1 = x + r < Marked.length ? (int) (x + r) : Marked.length;
-        int j1 = y + r < Marked[0].length ? (int) (y + r) : Marked[0].length;
-        for (int i = i0; i < i1; i++) {
-            for (int j = j0; j < j1; j++) {
-                if ((i - x) * (i - x) + (j - y) * (j - y) <= r * r)
-                    Marked[i][j] = true;
-            }
-        }
-    }
 
-    public Boolean IfLose(double x, double y, double width, double Alpha) {
-        for (double beta = Alpha - Math.PI / 2; beta < Alpha + Math.PI / 2; beta += Math.PI / 10) {
-            double x1 = x + width * Math.cos(beta);
-            double y1 = y + width * Math.sin(beta);
-            if (Marked[(int) Math.round(x1)][(int) Math.round(y1)]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void MakeCanvasAndGraphicsContext(int width, int height, Group root)
-    {
+    public void MakeCanvasAndGraphicsContext(int width, int height, Group root) {
         canvas = new Canvas(width, height);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -79,17 +63,25 @@ public class Main extends Application {
         AnchorPane pane1 = new AnchorPane();
         pane1.getChildren().add(canvas);
 
-        AnchorPane pane2 = new AnchorPane();
-        pane2.getChildren().add(new ScrollBar());
+        VBox pane2 = new VBox();
+
+        Label l1=new Label("Mikołaj - 0");
+        Label l2=new Label("Tomek - 0");
+
+
+        Button NewGameBtn= new Button("New Game");
+        pane2.getChildren().addAll(l1,l2,NewGameBtn);
+
         pane.getItems().addAll(pane1, pane2);
+
+
 
         root.getChildren().add(pane);
 
 
     }
 
-    public void InitialiseTwoDefaultPlayers()
-    {
+    public void InitialiseTwoDefaultPlayers() {
         PlayerList = new LinkedList<HumanPlayer>();
         PlayerList.add(new HumanPlayer(400, 400, 0, Color.GREEN, KeyCode.LEFT, KeyCode.RIGHT));
         PlayerList.add(new HumanPlayer(100, 100, 0, Color.BLUE, KeyCode.A, KeyCode.D));
@@ -97,14 +89,21 @@ public class Main extends Application {
 
     TimerTask task = new TimerTask() {
         public void run() {
-            for (HumanPlayer hp : PlayerList) {
-                if (!hp.getHasLost()) {
-                    hp.setX(hp.getX() + hp.getVelocity() * Math.cos(hp.getAlpha()));
-                    hp.setY(hp.getY() + hp.getVelocity() * Math.sin(hp.getAlpha()));
-                    gc.setFill(hp.getColor());
-                    gc.fillRoundRect(hp.getX() + 5, hp.getY() + 5, 10, 10, 10, 10);
-                    if (!hp.IfLose(Marked, hp.getX() + 5, hp.getY() + 5, 5, hp.getAlpha())) {
-                        hp.MarkOnTab(Marked, hp.getX() + 5, hp.getY() + 5, 5);
+            if(!(KeyPress==null) && !KeyPress.getPaused())
+            {
+                for (HumanPlayer hp : PlayerList) {
+                    if (!hp.getHasLost()) {
+                        hp.setX(hp.getX() + hp.getVelocity() * Math.cos(hp.getAlpha()));
+                        hp.setY(hp.getY() + hp.getVelocity() * Math.sin(hp.getAlpha()));
+                        gc.setFill(hp.getColor());
+                        gc.fillRoundRect(hp.getX() + 5, hp.getY() + 5, 10, 10, 10, 10);
+                        if (!hp.IfLose(Marked, hp.getX() + 5, hp.getY() + 5, 5, hp.getAlpha())) {
+                            hp.MarkOnTab(Marked, hp.getX() + 5, hp.getY() + 5, 5);
+                        }
+                        if(hp.getTurningLeft() == true)
+                            hp.setAlpha(hp.getAlpha() - Math.PI / 30);
+                        if(hp.getTurningRight() == true)
+                            hp.setAlpha(hp.getAlpha() + Math.PI / 30);
                     }
                 }
             }
@@ -116,10 +115,7 @@ public class Main extends Application {
         {
             for (HumanPlayer hp : PlayerList)
             {
-                if(hp.getTurningLeft() == true)
-                    hp.setAlpha(hp.getAlpha() - Math.PI / 30);
-                if(hp.getTurningRight() == true)
-                    hp.setAlpha(hp.getAlpha() + Math.PI / 30);
+
             }
         }
     };
@@ -143,6 +139,7 @@ public class Main extends Application {
         primaryStage.setScene(sc);
         primaryStage.show();
         sc.setOnKeyReleased(new KeyReleased(PlayerList));
-        sc.setOnKeyPressed(new KeyPressed(PlayerList));
+        KeyPress=new KeyPressed(PlayerList);
+        sc.setOnKeyPressed(KeyPress);
     }
 }
