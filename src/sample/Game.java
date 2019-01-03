@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Game
+public class Game implements Runnable
 {
     private LinkedList<Player> players;
     private Stage stage;
@@ -22,12 +22,19 @@ public class Game
         this.maxStageCount = maxStageCount;
         stageCount = 0;
     }
-    public void Run() throws InterruptedException {
-        stage = new Stage(players, gc);
+    public void run()
+    {
         while(stageCount != maxStageCount)
         {
             stage = new Stage(players, gc);
-            stage.Play();
+            try
+            {
+                stage.Play();
+            }
+            catch (InterruptedException e)
+            {
+                // TO DO LATER
+            }
             stageCount++;
         }
     }
@@ -42,8 +49,5 @@ public class Game
         return stage;
     }
     public LinkedList<Player> getPlayers() { return players; }
-
-
-
 
 }

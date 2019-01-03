@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.paint.Color;
 
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Player
@@ -17,6 +18,7 @@ public class Player
     private int points;
     private LinkedBlockingQueue<Integer> messageQueue;
 
+
     public Player(double x, double y, double alpha, Color color)
     {
         myID = maxID;
@@ -27,6 +29,14 @@ public class Player
         this.color = color;
         points = 0;
         messageQueue = null;
+    }
+
+    public int getMyID() {
+        return myID;
+    }
+
+    public void setHasLost(Boolean hasLost) {
+        this.hasLost = hasLost;
     }
 
     public double getX() {
@@ -60,6 +70,7 @@ public class Player
     public Color getColor() {
         return color;
     }
+
     public void AddMessageQueue(LinkedBlockingQueue queue)
     {
         messageQueue = queue;
@@ -112,6 +123,13 @@ public class Player
 
     public int getPoints() {
         return points;
+    }
+
+    public void SetRandomPosition(int width, int height)
+    {
+        Random r = new Random();
+        x = r.nextInt(width);
+        y = r.nextInt(height);
     }
 
 

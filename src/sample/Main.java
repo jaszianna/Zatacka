@@ -108,6 +108,6 @@ public class Main extends Application {
 
 
         root.getChildren().add(pane);
-        //game.Run();
+
     }
 }

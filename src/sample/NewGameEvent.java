@@ -11,10 +11,7 @@ public class NewGameEvent implements EventHandler<ActionEvent>
     @Override
     public void handle(ActionEvent event)
     {
-        try {
-            game.Run();
-        } catch (InterruptedException e) {
-
-        }
+        Thread thread = new Thread(game);
+        thread.start();
     }
 }
