@@ -1,7 +1,7 @@
-package sample;
+package sample.AddPlayer;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+        import javafx.event.ActionEvent;
+        import javafx.event.EventHandler;
 
 public class AddPlayerEvent implements EventHandler<ActionEvent>
 {
