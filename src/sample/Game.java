@@ -22,6 +22,11 @@ public class Game implements Runnable
         this.maxStageCount = maxStageCount;
         stageCount = 0;
     }
+
+    public void setStageCount(int stageCount) {
+        this.stageCount = stageCount;
+    }
+
     public void run()
     {
         while(stageCount != maxStageCount)
