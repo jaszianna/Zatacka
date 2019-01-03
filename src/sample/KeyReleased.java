@@ -7,23 +7,23 @@ import java.util.List;
 
 public class KeyReleased implements EventHandler<KeyEvent>
 {
-    List<HumanPlayer> players;
-    KeyReleased(List<HumanPlayer> players)
+    List<Player> players;
+    KeyReleased(List<Player> players)
     {
         this.players = players;
     }
 
     @Override
     public void handle(KeyEvent event) {
-        for(HumanPlayer p:players)
+        for(Player p:players)
         {
-            if(event.getCode()== p.getLeft())
+            if(event.getCode()== ((HumanPlayer)p).getLeft())
             {
-                p.setTurningLeft(false);
+                ((HumanPlayer)p).setTurningLeft(false);
             }
-            if(event.getCode()== p.getRight())
+            if(event.getCode()== ((HumanPlayer)p).getRight())
             {
-                p.setTurningRight(false);
+                ((HumanPlayer)p).setTurningRight(false);
             }
         }
     }

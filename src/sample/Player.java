@@ -2,22 +2,31 @@ package sample;
 
 import javafx.scene.paint.Color;
 
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class Player
 {
-private double x;
-private double y;
-private static double velocity = 3;
-private double alpha;
-private Color color;
-private Boolean hasLost = false;
-private int points;
+    static int maxID = 0;
+    private int myID;
+    private double x;
+    private double y;
+    private static double velocity = 3;
+    private double alpha;
+    private Color color;
+    private Boolean hasLost = false;
+    private int points;
+    private LinkedBlockingQueue<Integer> messageQueue;
 
-    public Player(double x, double y, double alpha, Color color) {
+    public Player(double x, double y, double alpha, Color color)
+    {
+        myID = maxID;
+        maxID += 11 % 2019;
         this.x = x;
         this.y = y;
         this.alpha = alpha;
         this.color = color;
         points = 0;
+        messageQueue = null;
     }
 
     public double getX() {
@@ -51,9 +60,13 @@ private int points;
     public Color getColor() {
         return color;
     }
+    public void AddMessageQueue(LinkedBlockingQueue queue)
+    {
+        messageQueue = queue;
+    }
 
-    public Boolean IfLose(Boolean[][] Marked, double x, double y, double width, double Alpha) {
-        for(double beta=Alpha-Math.PI/2;beta<Alpha+Math.PI/2;beta+=Math.PI/10)
+    public Boolean IfLose(Boolean[][] Marked, double x, double y, double width, double Alpha) throws InterruptedException {
+        for(double beta=Alpha-Math.PI/4;beta<Alpha+Math.PI/4;beta+=Math.PI/10)
         {
             double x1=x+width*Math.cos(beta);
             double y1=y+width*Math.sin(beta);
@@ -61,6 +74,7 @@ private int points;
             {
 
                 hasLost = true;
+                messageQueue.put(myID);
                 return true;
             }
         }

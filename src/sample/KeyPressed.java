@@ -8,14 +8,14 @@ import java.util.List;
 
 public class KeyPressed implements EventHandler<KeyEvent>
 {
-    List<HumanPlayer> players;
+    List<Player> players;
 
     public Boolean getPaused() {
         return Paused;
     }
 
     Boolean Paused=true;
-    KeyPressed(List<HumanPlayer> players)
+    KeyPressed(List<Player> players)
     {
         this.players = players;
     }
@@ -26,15 +26,15 @@ public class KeyPressed implements EventHandler<KeyEvent>
         {
             Paused=Paused==true?false:true;
         }
-        for(HumanPlayer p:players)
+        for(Player p:players)
         {
-            if(event.getCode() == p.getLeft())
+            if(event.getCode() == ((HumanPlayer)p).getLeft())
             {
-                p.setTurningLeft(true);
+                ((HumanPlayer)p).setTurningLeft(true);
             }
-            if(event.getCode()== p.getRight())
+            if(event.getCode() == ((HumanPlayer)p).getRight())
             {
-                p.setTurningRight(true);
+                ((HumanPlayer)p).setTurningRight(true);
             }
         }
     }
