@@ -23,8 +23,8 @@ public class Stage
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         MakeMarkedTab((int)gc.getCanvas().getWidth(), (int)gc.getCanvas().getHeight());
         queue = new LinkedBlockingQueue<Integer>();
-        for (Player p:activePlayers
-             ) {
+        for (Player p:activePlayers)
+        {
             p.AddMessageQueue(queue);
             p.SetRandomPosition((int)gc.getCanvas().getWidth(), (int)gc.getCanvas().getHeight());
             p.setHasLost(false);

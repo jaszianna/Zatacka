@@ -26,8 +26,7 @@ public class CloseWindowAndAddPlayerEvent implements EventHandler<ActionEvent>
     public void handle(ActionEvent event)
     {
         KeyCode leftKey, rightKey;
-        if(OwnerWindow.getIfCanBeHumanPlayer().isSelected())
-        {
+
             leftKey=OwnerWindow.getLeftKeyCode();
             rightKey=OwnerWindow.getRightKeyCode();
             Color c=OwnerWindow.getPicker().getValue();
@@ -38,12 +37,5 @@ public class CloseWindowAndAddPlayerEvent implements EventHandler<ActionEvent>
             HumanPlayer hp=new HumanPlayer(Name,1000,1000,c,leftKey,rightKey);
             PlayersList.add(hp);
             OwnerStage.close();
-        }
-        else
-        {
-            //TODO
-        }
-
-
     }
 }

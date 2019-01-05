@@ -3,9 +3,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class PickKeyEvent implements EventHandler<ActionEvent>
+public class PickKeyEvent implements EventHandler<MouseEvent>
 {
 
     private Stage OwnerStage;
@@ -36,7 +37,7 @@ public class PickKeyEvent implements EventHandler<ActionEvent>
     }
 
     @Override
-    public void handle(ActionEvent event)
+    public void handle(MouseEvent event)
     {
         PickKeyWindow window=new PickKeyWindow(Name,OwnerStage,OwnerLabel, OwnerWindow);
     }

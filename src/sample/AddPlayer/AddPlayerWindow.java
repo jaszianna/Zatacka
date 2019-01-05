@@ -1,27 +1,26 @@
 package sample.AddPlayer;
 
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import sample.Player;
 
-import java.util.LinkedList;
 
 
-public class AddPlayerWindow {
-    private ColorPicker Picker;
-    private TextArea NameText;
-    private CheckBox IfCanBeHumanPlayer;
+public class AddPlayerWindow
+{
+    private ColorPicker colorPicker;
+    private TextField textField;
     private KeyCode LeftKeyCode;
     private KeyCode RightKeyCode;
-
-
-
-
-//    private PickKeyEvent LeftKeyEventObject;
-//    private PickKeyEvent RightKeyEventObject;
     private ObservableList<Player> PlayersList;
 
     public KeyCode getLeftKeyCode() {
@@ -42,64 +41,85 @@ public class AddPlayerWindow {
 
     public AddPlayerWindow(ObservableList<Player> p)
     {
-        PlayersList=p;
+        PlayersList = p;
         MakeUI();
     }
 
-    public void MakeUI() {
-        // New window (Stage)
-        javafx.stage.Stage newWindow = new javafx.stage.Stage();
-        newWindow.setTitle("Create New Game");
+    public void MakeUI()
+    {
+        Stage primaryStage = new Stage();
+        primaryStage.setResizable(false);
+        primaryStage.setWidth(240);
+        primaryStage.setHeight(400);
 
-        Label EmptyLabel1=new Label();
-        Label EmptyLabel2=new Label();
-        Label EmptyLabel3=new Label();
-        Label EmptyLabel4=new Label();
-        Label EmptyLabel5=new Label();
-        Label NameLab=new Label("Name:");
-        NameText=new TextArea();
-        NameText.setMaxHeight(20);
-        NameText.setMaxWidth(200);
-        Label ColorLab=new Label("Color:");
-        Picker=new ColorPicker();
-        Label HumanPlayerLab=new Label("Human Player");
-        IfCanBeHumanPlayer=new CheckBox();
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Label LeftKeyLab=new Label("none");
-        LeftKeyLab.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
-        Button LeftKeyBtn=new Button("Left Key");
-        LeftKeyBtn.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
-        LeftKeyBtn.setOnAction(new PickKeyEvent("Left",this,newWindow,LeftKeyLab));
+        textField = new TextField();
+        textField.setPromptText("Name:");
+        textField.setPrefSize(180, 30);
+        textField.setLayoutX(30);
+        textField.setLayoutY(40);
 
-        Label RightKeyLab=new Label("none");
-        RightKeyLab.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
-        Button RightKeyBtn=new Button("Right Key");
-        RightKeyBtn.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
-        RightKeyBtn.setOnAction(new PickKeyEvent("Right",this,newWindow,RightKeyLab));
+        colorPicker = new ColorPicker();
+        colorPicker.setPrefSize(180,30);
+        colorPicker.setLayoutX(30);
+        colorPicker.setLayoutY(90);
 
-        Button AddBtn=new Button("Add");
-        AddBtn.setOnAction(new CloseWindowAndAddPlayerEvent(newWindow,this,PlayersList));
+        Label turnLeftLabel = new Label();
+        turnLeftLabel.setText("Left turn key:");
+        turnLeftLabel.setPrefSize(130,30);
+        turnLeftLabel.setLayoutX(30);
+        turnLeftLabel.setLayoutY(140);
 
-        VBox Box = new VBox();
-        Box.getChildren().addAll(NameLab, NameText,EmptyLabel1, ColorLab,  Picker, EmptyLabel2, HumanPlayerLab, IfCanBeHumanPlayer, EmptyLabel3,  LeftKeyBtn, LeftKeyLab, EmptyLabel4,  RightKeyBtn, RightKeyLab, EmptyLabel5, AddBtn);
-        Scene secondScene = new Scene(Box, 400, 400);
-        newWindow.setScene(secondScene);
+        Label turnRightLabel = new Label();
+        turnRightLabel.setText("Right turn key:");
+        turnRightLabel.setPrefSize(130,30);
+        turnRightLabel.setLayoutX(30);
+        turnRightLabel.setLayoutY(190);
 
-        // Set position of second window, related to primary window.
-        newWindow.centerOnScreen();
-        newWindow.show();
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+        submitButton.setLayoutX(30);
+        submitButton.setLayoutY(240);
+        submitButton.setPrefSize(180,30);
+        submitButton.setOnAction(new CloseWindowAndAddPlayerEvent(primaryStage,this, PlayersList));
+
+        Button cancelButton = new Button();
+        cancelButton.setText("Cancel");
+        cancelButton.setLayoutX(30);
+        cancelButton.setLayoutY(290);
+        cancelButton.setPrefSize(180,30);
+
+        Label leftKeyLabel = new Label();
+        leftKeyLabel.setPrefSize(50,30);
+        leftKeyLabel.setLayoutX(160);
+        leftKeyLabel.setLayoutY(140);
+        leftKeyLabel.setText("none");
+        leftKeyLabel.setOnMouseClicked(new PickKeyEvent("Left",this, primaryStage, leftKeyLabel));
+
+        Label rightKeyLabel = new Label();
+        rightKeyLabel.setPrefSize(50,30);
+        rightKeyLabel.setLayoutX(160);
+        rightKeyLabel.setLayoutY(190);
+        rightKeyLabel.setText("none");
+        rightKeyLabel.setOnMouseClicked(new PickKeyEvent("Right",this, primaryStage, rightKeyLabel));
+
+        anchorPane.getChildren().addAll(colorPicker, textField, turnLeftLabel,
+                turnRightLabel, submitButton, cancelButton,
+                leftKeyLabel, rightKeyLabel);
+
+        primaryStage.setTitle("New Player");
+        primaryStage.setScene(new Scene(anchorPane));
+        primaryStage.centerOnScreen();
+        primaryStage.show();
     }
 
     public ColorPicker getPicker() {
-        return Picker;
+        return colorPicker;
     }
 
-    public TextArea getNameText() {
-        return NameText;
+    public TextField getNameText() {
+        return textField;
     }
-
-    public CheckBox getIfCanBeHumanPlayer() {
-        return IfCanBeHumanPlayer;
-    }
-
 }

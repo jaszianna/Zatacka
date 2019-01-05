@@ -16,6 +16,6 @@ public class AddPlayerEvent implements EventHandler<ActionEvent>
     @Override
     public void handle(ActionEvent event)
     {
-    AddPlayerWindow window=new AddPlayerWindow(PlayersList);
+        AddPlayerWindow window=new AddPlayerWindow(PlayersList);
     }
 }
