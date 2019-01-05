@@ -11,7 +11,8 @@ public class NewGameEvent implements EventHandler<ActionEvent>
     @Override
     public void handle(ActionEvent event)
     {
-        NewGameWindow.InitialiseWindow();
+        NewGameWindow window=new NewGameWindow();
+        window.InitialiseWindow();
         //Thread thread = new Thread(game);
         //thread.start();
     }

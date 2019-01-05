@@ -17,15 +17,15 @@ public class Player
     private Boolean hasLost = false;
     private int points;
     private LinkedBlockingQueue<Integer> messageQueue;
+    private String Name;
 
 
-    public Player(double x, double y, double alpha, Color color)
+    public Player(String n, int width, int height, Color color)
     {
+        Name=n;
         myID = maxID;
-        maxID += 11 % 2019;
-        this.x = x;
-        this.y = y;
-        this.alpha = alpha;
+        maxID += 1 ;
+        SetRandomPosition(width,height);
         this.color = color;
         points = 0;
         messageQueue = null;
@@ -128,8 +128,9 @@ public class Player
     public void SetRandomPosition(int width, int height)
     {
         Random r = new Random();
-        x = r.nextInt(width);
-        y = r.nextInt(height);
+        x = r.nextInt(width-200)+100;
+        y = r.nextInt(height-200)+100;
+        alpha=r.nextDouble()*Math.PI*2;
     }
 
 

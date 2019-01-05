@@ -11,8 +11,8 @@ public class HumanPlayer extends Player
     private Boolean turningLeft;
 
 
-    public HumanPlayer(double x, double y, double alpha, Color color, KeyCode left, KeyCode right) {
-        super(x, y, alpha, color);
+    public HumanPlayer(String Name, int width, int height, Color color, KeyCode left, KeyCode right) {
+        super(Name,width,height,color);
         Left=left;
         Right=right;
         turningRight = false;

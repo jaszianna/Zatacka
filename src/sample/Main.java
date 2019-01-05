@@ -70,8 +70,8 @@ public class Main extends Application {
     public void InitialiseTwoDefaultPlayers()
     {
         game = new Game(1, gc);
-        game.AddPlayers(new HumanPlayer(400, 400, 0, Color.GREEN, KeyCode.LEFT, KeyCode.RIGHT),
-                new HumanPlayer(100, 100, 0, Color.BLUE, KeyCode.A, KeyCode.D));
+        //game.AddPlayers(new HumanPlayer(400, 400, 0, Color.GREEN, KeyCode.LEFT, KeyCode.RIGHT),
+        //        new HumanPlayer(100, 100, 0, Color.BLUE, KeyCode.A, KeyCode.D));
     }
 
 

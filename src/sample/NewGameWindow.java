@@ -6,11 +6,21 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import sample.AddPlayer.AddPlayerEvent;
 
+import java.util.LinkedList;
+
 public class NewGameWindow {
-    public static void InitialiseWindow()
+
+    private LinkedList<Player> PlayersList;
+
+    public NewGameWindow()
+    {
+        PlayersList=new LinkedList<>();
+    }
+
+    public void InitialiseWindow()
     {
         Button AddPlayer = new Button("Add Player");
-        AddPlayer.setOnAction(new AddPlayerEvent());
+        AddPlayer.setOnAction(new AddPlayerEvent(PlayersList));
 
         StackPane secondaryLayout = new StackPane();
         secondaryLayout.getChildren().add(AddPlayer);
