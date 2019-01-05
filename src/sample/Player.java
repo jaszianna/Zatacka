@@ -20,6 +20,7 @@ public class Player
     private String Name;
 
 
+
     public Player(String n, int width, int height, Color color)
     {
         Name=n;
@@ -29,6 +30,10 @@ public class Player
         this.color = color;
         points = 0;
         messageQueue = null;
+    }
+
+    public String getName() {
+        return Name;
     }
 
     public int getMyID() {

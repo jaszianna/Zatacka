@@ -12,17 +12,15 @@ public class PickKeyWindow {
 
     private String Name;
     private Stage OwnerStage;
-    private KeyCode SelectedKey;
     private Label OwnerLabel;
+    private AddPlayerWindow OwnerWindow;
 
-    public KeyCode getSelectedKey() {
-        return SelectedKey;
-    }
 
-    public PickKeyWindow(String name, Stage owner, Label l) {
+    public PickKeyWindow(String name, Stage owner, Label l,AddPlayerWindow w) {
         Name = name;
         OwnerStage=owner;
         OwnerLabel=l;
+        OwnerWindow=w;
         MakeUI();
     }
 
@@ -48,7 +46,7 @@ public class PickKeyWindow {
         newWindow.setTitle("Chosing "+Name+ " Key");
         newWindow.setScene(secondScene);
 
-        secondScene.setOnKeyPressed(new KeyPickerEvent(newWindow,SelectedKey, OwnerLabel));
+        secondScene.setOnKeyPressed(new KeyPickerEvent(newWindow,OwnerLabel,OwnerWindow,Name));
 
 
         newWindow.initModality(Modality.WINDOW_MODAL);

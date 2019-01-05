@@ -11,7 +11,8 @@ public class PickKeyEvent implements EventHandler<ActionEvent>
     private Stage OwnerStage;
     private String Name;
     private Label OwnerLabel;
-    private KeyCode Key;
+    private AddPlayerWindow OwnerWindow;
+
 
     public Stage getOwnerStage() {
         return OwnerStage;
@@ -25,20 +26,18 @@ public class PickKeyEvent implements EventHandler<ActionEvent>
         return OwnerLabel;
     }
 
-    public KeyCode getKey() {
-        return Key;
-    }
 
-    public PickKeyEvent(String n, Stage ownerStage, Label l) {
+
+    public PickKeyEvent(String n,AddPlayerWindow w, Stage ownerStage, Label l) {
         Name=n;
         OwnerStage = ownerStage;
         OwnerLabel =l;
+        OwnerWindow=w;
     }
 
     @Override
     public void handle(ActionEvent event)
     {
-        PickKeyWindow window=new PickKeyWindow(Name,OwnerStage,OwnerLabel);
-        Key=window.getSelectedKey();
+        PickKeyWindow window=new PickKeyWindow(Name,OwnerStage,OwnerLabel, OwnerWindow);
     }
 }

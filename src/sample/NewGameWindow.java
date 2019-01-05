@@ -1,31 +1,57 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.AddPlayer.AddPlayerEvent;
 
-import java.util.LinkedList;
-
 public class NewGameWindow {
 
-    private LinkedList<Player> PlayersList;
+    private ObservableList<Player> PlayersList;
+    private ListView<Player> PlayersListView;
+
 
     public NewGameWindow()
     {
-        PlayersList=new LinkedList<>();
+        PlayersList= FXCollections.observableArrayList();
+        PlayersListView=new ListView<>(PlayersList);
+        PlayersListView.setCellFactory(param -> new ListCell<Player>() {
+            @Override
+            protected void updateItem(Player item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                    setTextFill(item.getColor());
+                }
+            }
+        });
     }
 
     public void InitialiseWindow()
     {
+
         Button AddPlayer = new Button("Add Player");
         AddPlayer.setOnAction(new AddPlayerEvent(PlayersList));
 
-        StackPane secondaryLayout = new StackPane();
-        secondaryLayout.getChildren().add(AddPlayer);
+        VBox Box=new VBox();
+        Pane p=new Pane();
 
-        Scene secondScene = new Scene(secondaryLayout, 230, 100);
+        Box.getChildren().addAll(PlayersListView,AddPlayer);
+        //StackPane secondaryLayout = new StackPane();
+        //secondaryLayout.getChildren().add(AddPlayer);
+
+        Scene secondScene = new Scene(Box, 230, 100);
 
         // New window (Stage)
         Stage newWindow = new Stage();

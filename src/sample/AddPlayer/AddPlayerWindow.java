@@ -1,7 +1,9 @@
 package sample.AddPlayer;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import sample.Player;
 
@@ -12,11 +14,33 @@ public class AddPlayerWindow {
     private ColorPicker Picker;
     private TextArea NameText;
     private CheckBox IfCanBeHumanPlayer;
-    private PickKeyEvent LeftKeyEventObject;
-    private PickKeyEvent RightKeyEventObject;
-    private LinkedList<Player> PlayersList;
+    private KeyCode LeftKeyCode;
+    private KeyCode RightKeyCode;
 
-    public AddPlayerWindow(LinkedList<Player> p)
+
+
+
+//    private PickKeyEvent LeftKeyEventObject;
+//    private PickKeyEvent RightKeyEventObject;
+    private ObservableList<Player> PlayersList;
+
+    public KeyCode getLeftKeyCode() {
+        return LeftKeyCode;
+    }
+
+    public void setLeftKeyCode(KeyCode leftKeyCode) {
+        LeftKeyCode = leftKeyCode;
+    }
+
+    public KeyCode getRightKeyCode() {
+        return RightKeyCode;
+    }
+
+    public void setRightKeyCode(KeyCode rightKeyCode) {
+        RightKeyCode = rightKeyCode;
+    }
+
+    public AddPlayerWindow(ObservableList<Player> p)
     {
         PlayersList=p;
         MakeUI();
@@ -45,15 +69,13 @@ public class AddPlayerWindow {
         LeftKeyLab.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
         Button LeftKeyBtn=new Button("Left Key");
         LeftKeyBtn.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
-        LeftKeyEventObject=new PickKeyEvent("Left",newWindow,LeftKeyLab);
-        LeftKeyBtn.setOnAction(LeftKeyEventObject);
+        LeftKeyBtn.setOnAction(new PickKeyEvent("Left",this,newWindow,LeftKeyLab));
 
         Label RightKeyLab=new Label("none");
         RightKeyLab.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
         Button RightKeyBtn=new Button("Right Key");
         RightKeyBtn.visibleProperty().bind(IfCanBeHumanPlayer.selectedProperty());
-        RightKeyEventObject=new PickKeyEvent("Right",newWindow,RightKeyLab);
-        RightKeyBtn.setOnAction(RightKeyEventObject);
+        RightKeyBtn.setOnAction(new PickKeyEvent("Right",this,newWindow,RightKeyLab));
 
         Button AddBtn=new Button("Add");
         AddBtn.setOnAction(new CloseWindowAndAddPlayerEvent(newWindow,this,PlayersList));
@@ -80,11 +102,4 @@ public class AddPlayerWindow {
         return IfCanBeHumanPlayer;
     }
 
-    public PickKeyEvent getLeftKeyEventObject() {
-        return LeftKeyEventObject;
-    }
-
-    public PickKeyEvent getRightKeyEventObject() {
-        return RightKeyEventObject;
-    }
 }
