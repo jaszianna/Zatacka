@@ -41,7 +41,7 @@ public class PickKeyWindow {
 
         Scene secondScene = new Scene(secondaryLayout, 300, 100);
 
-        // New window (Stage)
+        // New window (Round)
         Stage newWindow = new Stage();
         newWindow.setTitle("Chosing "+Name+ " Key");
         newWindow.setScene(secondScene);

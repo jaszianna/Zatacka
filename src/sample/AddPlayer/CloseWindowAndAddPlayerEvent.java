@@ -27,8 +27,8 @@ public class CloseWindowAndAddPlayerEvent implements EventHandler<ActionEvent>
     {
         KeyCode leftKey, rightKey;
 
-            leftKey=OwnerWindow.getLeftKeyCode();
-            rightKey=OwnerWindow.getRightKeyCode();
+            leftKey = OwnerWindow.getLeftKeyCode();
+            rightKey = OwnerWindow.getRightKeyCode();
             Color c=OwnerWindow.getPicker().getValue();
             String Name=OwnerWindow.getNameText().getText();
 

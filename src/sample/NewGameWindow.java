@@ -6,29 +6,40 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.AddPlayer.AddPlayerEvent;
 
-public class NewGameWindow {
+import java.util.LinkedList;
 
-    private ObservableList<Player> PlayersList;
-    private ListView<Player> PlayersListView;
+public class NewGameWindow
+{
+
+    private ObservableList<Player> items;
+    private ListView<Player> listView;
 
 
     public NewGameWindow()
     {
-        PlayersList= FXCollections.observableArrayList();
-        PlayersListView=new ListView<>(PlayersList);
-        PlayersListView.setCellFactory(param -> new ListCell<Player>() {
+        items = FXCollections.observableArrayList();
+        Stage primaryStage = new Stage();
+        primaryStage.setResizable(false);
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(900);
+
+        listView = new ListView<>();
+        listView.setLayoutX(50);
+        listView.setLayoutY(30);
+        listView.setPrefSize(500,500);
+        listView.setCellFactory(param -> new ListCell<Player>()
+        {
             @Override
             protected void updateItem(Player item, boolean empty) {
                 super.updateItem(item, empty);
-
-                if (empty || item == null) {
+                if (empty || item == null)
+                {
                     setText(null);
                 } else {
                     setText(item.getName());
@@ -36,32 +47,20 @@ public class NewGameWindow {
                 }
             }
         });
-    }
+        listView.setItems(items);
 
-    public void InitialiseWindow()
-    {
+        Button addPlayerButton = new Button();
+        addPlayerButton.setText("Add Player");
+        addPlayerButton.setLayoutY(560);
+        addPlayerButton.setLayoutX(200);
+        addPlayerButton.setOnAction(new AddPlayerEvent(items));
 
-        Button AddPlayer = new Button("Add Player");
-        AddPlayer.setOnAction(new AddPlayerEvent(PlayersList));
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().addAll(addPlayerButton, listView);
 
-        VBox Box=new VBox();
-        Pane p=new Pane();
-
-        Box.getChildren().addAll(PlayersListView,AddPlayer);
-        //StackPane secondaryLayout = new StackPane();
-        //secondaryLayout.getChildren().add(AddPlayer);
-
-        Scene secondScene = new Scene(Box, 230, 100);
-
-        // New window (Stage)
-        Stage newWindow = new Stage();
-        newWindow.setTitle("New Game");
-        newWindow.setScene(secondScene);
-
-        // Set position of second window, related to primary window.
-        newWindow.setX(200);
-        newWindow.setY(100);
-
-        newWindow.show();
+        primaryStage.setTitle("New Game");
+        primaryStage.setScene(new Scene(anchorPane));
+        primaryStage.centerOnScreen();
+        primaryStage.show();
     }
 }

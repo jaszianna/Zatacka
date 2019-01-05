@@ -8,14 +8,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Stage
+public class Round
 {
     private LinkedList<Player> activePlayers;
     public Boolean Marked[][];
     private GraphicsContext gc;
     private LinkedBlockingQueue<Integer> queue;
 
-    public Stage(LinkedList<Player> activePlayers, GraphicsContext graphicsContext)
+    public Round(LinkedList<Player> activePlayers, GraphicsContext graphicsContext)
     {
         this.activePlayers = (LinkedList<Player>) activePlayers.clone();
         gc = graphicsContext;

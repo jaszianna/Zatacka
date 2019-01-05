@@ -1,16 +1,13 @@
 package sample;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Game implements Runnable
 {
     private LinkedList<Player> players;
-    private Stage stage;
+    private Round stage;
     private int maxStageCount;
     private int stageCount;
     private GraphicsContext gc;
@@ -31,7 +28,7 @@ public class Game implements Runnable
     {
         while(stageCount != maxStageCount)
         {
-            stage = new Stage(players, gc);
+            stage = new Round(players, gc);
             try
             {
                 stage.Play();
@@ -50,7 +47,7 @@ public class Game implements Runnable
             this.players.add(p);
         }
     }
-    public Stage getStage() {
+    public Round getStage() {
         return stage;
     }
     public LinkedList<Player> getPlayers() { return players; }
