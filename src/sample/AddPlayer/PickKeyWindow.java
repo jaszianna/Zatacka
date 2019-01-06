@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,12 +47,21 @@ public class PickKeyWindow {
         newWindow.setTitle("Chosing "+Name+ " Key");
         newWindow.setScene(secondScene);
 
-        secondScene.setOnKeyPressed(new KeyPickerEvent(newWindow,OwnerLabel,OwnerWindow,Name));
+        secondScene.setOnKeyPressed(e->KeyPickerEv(newWindow,e));
 
 
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(OwnerStage);
 
         newWindow.show();
+    }
+    private void KeyPickerEv(Stage window,KeyEvent event)
+    {
+        if(Name=="Left")
+            OwnerWindow.setLeftKeyCode(event.getCode());
+        else
+            OwnerWindow.setRightKeyCode(event.getCode());
+        OwnerLabel.setText(event.getCode().getName());
+        window.close();
     }
 }

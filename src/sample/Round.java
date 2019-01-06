@@ -14,9 +14,11 @@ public class Round
     public Boolean Marked[][];
     private GraphicsContext gc;
     private LinkedBlockingQueue<Integer> queue;
+    private int MoveTimerPeriod;
 
-    public Round(LinkedList<Player> activePlayers, GraphicsContext graphicsContext)
+    public Round(LinkedList<Player> activePlayers, GraphicsContext graphicsContext, int period)
     {
+        MoveTimerPeriod=period;
         this.activePlayers = (LinkedList<Player>) activePlayers.clone();
         gc = graphicsContext;
         gc.setFill(Color.BLACK);
@@ -46,8 +48,8 @@ public class Round
     public void Play() throws InterruptedException {
         Timer makeAMoveTimer = new Timer();
         Timer makingATurnTimer = new Timer();
-        makingATurnTimer.schedule(makingATurn, 0, 50);
-        makeAMoveTimer.schedule(makingAMove, 0, 20);
+        makingATurnTimer.schedule(makingATurn, 0, MoveTimerPeriod);
+        makeAMoveTimer.schedule(makingAMove, 0, 15);
         while(activePlayers.size() > 0)
         {
             int msg = queue.take();
@@ -70,8 +72,8 @@ public class Round
         public void run() {
             for (Player player : activePlayers) {
                 if (!player.getHasLost()) {
-                    player.setX(player.getX() + player.getVelocity() * Math.cos(player.getAlpha()));
-                    player.setY(player.getY() + player.getVelocity() * Math.sin(player.getAlpha()));
+                    player.setX(player.getX() + player.getVelocity()/10 * Math.cos(player.getAlpha()));
+                    player.setY(player.getY() + player.getVelocity()/10 * Math.sin(player.getAlpha()));
                     gc.setFill(player.getColor());
                     gc.fillRoundRect(player.getX() + 5, player.getY() + 5, 10, 10, 10, 10);
                     try {
@@ -92,9 +94,9 @@ public class Round
                 for (Player player : activePlayers)
                 {
                     if(((HumanPlayer)player).getTurningLeft() == true)
-                        player.setAlpha(player.getAlpha() - Math.PI / 15);
+                        player.setAlpha(player.getAlpha() - Math.PI / 30);
                     if(((HumanPlayer)player).getTurningRight() == true)
-                        player.setAlpha(player.getAlpha() + Math.PI / 15);
+                        player.setAlpha(player.getAlpha() + Math.PI / 30);
                 }
         }
     };

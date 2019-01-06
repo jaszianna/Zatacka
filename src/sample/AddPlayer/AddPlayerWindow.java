@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import sample.HumanPlayer;
 import sample.Player;
 
 
@@ -83,7 +84,7 @@ public class AddPlayerWindow
         submitButton.setLayoutX(30);
         submitButton.setLayoutY(240);
         submitButton.setPrefSize(180,30);
-        submitButton.setOnAction(new CloseWindowAndAddPlayerEvent(primaryStage,this, PlayersList));
+        submitButton.setOnAction(e->CloseWindowAndAddPalyerEv(primaryStage));
 
         Button cancelButton = new Button();
         cancelButton.setText("Cancel");
@@ -96,14 +97,16 @@ public class AddPlayerWindow
         leftKeyLabel.setLayoutX(160);
         leftKeyLabel.setLayoutY(140);
         leftKeyLabel.setText("none");
-        leftKeyLabel.setOnMouseClicked(new PickKeyEvent("Left",this, primaryStage, leftKeyLabel));
+        leftKeyLabel.setOnMouseClicked(e->PickKeyEv("Left",primaryStage,leftKeyLabel));
+
 
         Label rightKeyLabel = new Label();
         rightKeyLabel.setPrefSize(50,30);
         rightKeyLabel.setLayoutX(160);
         rightKeyLabel.setLayoutY(190);
         rightKeyLabel.setText("none");
-        rightKeyLabel.setOnMouseClicked(new PickKeyEvent("Right",this, primaryStage, rightKeyLabel));
+        rightKeyLabel.setOnMouseClicked(e->PickKeyEv("Right",primaryStage,rightKeyLabel));
+
 
         anchorPane.getChildren().addAll(colorPicker, textField, turnLeftLabel,
                 turnRightLabel, submitButton, cancelButton,
@@ -121,5 +124,22 @@ public class AddPlayerWindow
 
     public TextField getNameText() {
         return textField;
+    }
+
+    private void PickKeyEv(String Name,Stage stage, Label OwnerLabel)
+    {
+        PickKeyWindow window=new PickKeyWindow(Name,stage,OwnerLabel, this);
+    }
+
+    private void CloseWindowAndAddPalyerEv(Stage OwnerStage)
+    {
+        Color c=this.getPicker().getValue();
+        String Name=this.getNameText().getText();
+
+        //TODO - Passing width and height from main window
+
+        HumanPlayer hp=new HumanPlayer(Name,1000,1000,c,this.getLeftKeyCode(),this.getRightKeyCode());
+        PlayersList.add(hp);
+        OwnerStage.close();
     }
 }

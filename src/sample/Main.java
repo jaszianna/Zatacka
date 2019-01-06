@@ -29,14 +29,12 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     private Game game;
     private Scene sc;
+    private Canvas canvas;
+    private GraphicsContext gc;
 
-    public Canvas canvas;
-
-    public GraphicsContext gc;
-
-    public KeyPressed KeyPress;
 
     public void MakeCanvasAndGraphicsContext(int width, int height, Group root) {
         canvas = new Canvas(width, height);
@@ -60,10 +58,7 @@ public class Main extends Application {
         pane2.getChildren().addAll(l1,l2,NewGameBtn);
 
         pane.getItems().addAll(pane1, pane2);
-
         root.getChildren().add(pane);
-
-
     }
 
     @Override
@@ -74,6 +69,7 @@ public class Main extends Application {
         MakeCanvasAndGraphicsContext(1000, 1000, root);
 
         sc = new Scene(root);
+
         primaryStage.setScene(sc);
         primaryStage.show();
         game = new Game(1, gc);
@@ -96,6 +92,7 @@ public class Main extends Application {
 
         root.getChildren().add(pane);
     }
+
     public void NewGameEv()
     {
         NewGameWindow window = new NewGameWindow(game,sc);

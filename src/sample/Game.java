@@ -29,7 +29,7 @@ public class Game implements Runnable
     {
         while(stageCount != maxStageCount)
         {
-            stage = new Round(players, gc);
+            stage = new Round(players, gc,15);
             try
             {
                 stage.Play();

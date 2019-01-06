@@ -13,7 +13,6 @@ public class KeyPressed implements EventHandler<KeyEvent>
     public Boolean getPaused() {
         return Paused;
     }
-
     Boolean Paused=true;
     KeyPressed(List<Player> players)
     {

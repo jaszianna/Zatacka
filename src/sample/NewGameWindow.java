@@ -3,16 +3,16 @@ package sample;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sample.AddPlayer.AddPlayerEvent;
+import sample.AddPlayer.AddPlayerWindow;
 
 public class NewGameWindow
 {
-
     private ObservableList<Player> items;
     private ListView<Player> listView;
     private Stage primaryStage;
@@ -56,7 +56,7 @@ public class NewGameWindow
         addPlayerButton.setText("Add Player");
         addPlayerButton.setLayoutY(560);
         addPlayerButton.setLayoutX(200);
-        addPlayerButton.setOnAction(new AddPlayerEvent(items));
+        addPlayerButton.setOnAction(e->AddPlayerEventHandler());
 
         Button CreateGameButton=new Button("Create Game");
         CreateGameButton.setLayoutX(20);
@@ -122,6 +122,10 @@ public class NewGameWindow
         sc.setOnKeyPressed(new KeyPressed(game.getPlayers()));
         Thread thread = new Thread(game);
         thread.start();
+    }
+    private void AddPlayerEventHandler()
+    {
+        AddPlayerWindow window=new AddPlayerWindow(items);
     }
 
 }
