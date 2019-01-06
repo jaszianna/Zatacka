@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -8,93 +9,56 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args ); }
 
     private Game game;
-    private Scene sc;
+    private Scene scene;
     private Canvas canvas;
-    private GraphicsContext gc;
+    private GraphicsContext graphicsContext;
 
-
-    public void MakeCanvasAndGraphicsContext(int width, int height, Group root) {
-        canvas = new Canvas(width, height);
-        gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        SplitPane pane = new SplitPane();
-        pane.setOrientation(Orientation.HORIZONTAL);
-
-        AnchorPane pane1 = new AnchorPane();
-        pane1.getChildren().add(canvas);
-
-        VBox pane2 = new VBox();
-
-        Label l1=new Label("Mikołaj - 0");
-        Label l2=new Label("Tomek - 0");
-
-        Button NewGameBtn= new Button("New Game");
-        NewGameBtn.setOnAction(e->NewGameEv());
-        pane2.getChildren().addAll(l1,l2,NewGameBtn);
-
-        pane.getItems().addAll(pane1, pane2);
-        root.getChildren().add(pane);
-    }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
+        canvas = new Canvas();
+        canvas.setWidth(1000);
+        canvas.setHeight(1000);
 
-        primaryStage.setTitle("Our Zatacka!!!");
-        Group root = new Group();
-        MakeCanvasAndGraphicsContext(1000, 1000, root);
+        graphicsContext = canvas.getGraphicsContext2D();
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        sc = new Scene(root);
+        Button newGame = new Button("New Game");
+        newGame.setOnAction(e->NewGameEvent());
+        newGame.setLayoutY(60);
+        newGame.setLayoutX(1010);
 
-        primaryStage.setScene(sc);
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        anchorPane.getChildren().addAll(canvas, newGame);
+
+        scene = new Scene(anchorPane);
+
+        primaryStage.setTitle("Zatacka");
+        primaryStage.setHeight(1000);
+        primaryStage.setWidth(1300);
+        primaryStage.setResizable(false);
+        primaryStage.centerOnScreen();
+        primaryStage.setScene(scene);
         primaryStage.show();
-        game = new Game(1, gc);
-        SplitPane pane = new SplitPane();
-        pane.setOrientation(Orientation.HORIZONTAL);
 
-        AnchorPane pane1 = new AnchorPane();
-        pane1.getChildren().add(canvas);
-
-        VBox pane2 = new VBox();
-
-        Label l1=new Label("Mikołaj - 0");
-        Label l2=new Label("Tomek - 0");
-
-        Button NewGameBtn= new Button("New Game");
-        NewGameBtn.setOnAction(e->NewGameEv());
-        pane2.getChildren().addAll(l1,l2,NewGameBtn);
-
-        pane.getItems().addAll(pane1, pane2);
-
-        root.getChildren().add(pane);
+        game = new Game(1, graphicsContext);
     }
 
-    public void NewGameEv()
+    public void NewGameEvent()
     {
-        NewGameWindow window = new NewGameWindow(game,sc);
+        NewGameWindow window = new NewGameWindow(game, scene);
     }
 }

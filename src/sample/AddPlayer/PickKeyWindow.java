@@ -1,9 +1,7 @@
 package sample.AddPlayer;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -17,12 +15,13 @@ public class PickKeyWindow {
     private AddPlayerWindow OwnerWindow;
 
 
-    public PickKeyWindow(String name, Stage owner, Label l,AddPlayerWindow w) {
+    public PickKeyWindow(String name, Stage owner, Label l,AddPlayerWindow w)
+    {
         Name = name;
-        OwnerStage=owner;
-        OwnerLabel=l;
-        OwnerWindow=w;
-        MakeUI();
+        OwnerStage = owner;
+        OwnerLabel = l;
+        OwnerWindow = w;
+        InitializeWindow();
     }
 
     public String getName() {
@@ -33,9 +32,9 @@ public class PickKeyWindow {
         Name = name;
     }
 
-    public void MakeUI()
+    public void InitializeWindow()
     {
-        Label AddPlayer = new Label("Chose your "+Name+" Key");
+        Label AddPlayer = new Label("Chose your " + Name + "Key");
 
         StackPane secondaryLayout = new StackPane();
         secondaryLayout.getChildren().add(AddPlayer);
@@ -44,7 +43,7 @@ public class PickKeyWindow {
 
         // New window (Round)
         Stage newWindow = new Stage();
-        newWindow.setTitle("Chosing "+Name+ " Key");
+        newWindow.setTitle("Chosing " + Name + "Key");
         newWindow.setScene(secondScene);
 
         secondScene.setOnKeyPressed(e->KeyPickerEv(newWindow,e));

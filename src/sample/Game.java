@@ -56,9 +56,9 @@ public class Game implements Runnable
 
     public void ClearProperties()
     {
-        players= new LinkedList<Player>();
-        stageCount=0;
-        stage=null;
+        players = new LinkedList<Player>();
+        stageCount = 0;
+        stage = null;
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
     }

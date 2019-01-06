@@ -19,11 +19,9 @@ public class Player
     private LinkedBlockingQueue<Integer> messageQueue;
     private String Name;
 
-
-
     public Player(String n, int width, int height, Color color)
     {
-        Name=n;
+        Name = n;
         myID = maxID;
         maxID += 1 ;
         SetRandomPosition(width,height);
@@ -133,9 +131,9 @@ public class Player
     public void SetRandomPosition(int width, int height)
     {
         Random r = new Random();
-        x = r.nextInt(width-200)+100;
-        y = r.nextInt(height-200)+100;
-        alpha=r.nextDouble()*Math.PI*2;
+        x = r.nextInt(width - 200) + 100;
+        y = r.nextInt(height - 200) + 100;
+        alpha = r.nextDouble() * Math.PI * 2;
     }
 
     public void setVelocity(double velocity) {
