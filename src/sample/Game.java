@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
 
@@ -50,6 +51,19 @@ public class Game implements Runnable
     public Round getStage() {
         return stage;
     }
+
     public LinkedList<Player> getPlayers() { return players; }
 
+    public void ClearProperties()
+    {
+        players= new LinkedList<Player>();
+        stageCount=0;
+        stage=null;
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+    }
+
+    public void setMaxStageCount(int maxStageCount) {
+        this.maxStageCount = maxStageCount;
+    }
 }

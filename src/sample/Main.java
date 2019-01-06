@@ -30,6 +30,7 @@ public class Main extends Application {
         launch(args);
     }
     private Game game;
+    private Scene sc;
 
     public Canvas canvas;
 
@@ -55,25 +56,15 @@ public class Main extends Application {
         Label l2=new Label("Tomek - 0");
 
         Button NewGameBtn= new Button("New Game");
-        NewGameBtn.setOnAction(new NewGameEvent(game));
+        NewGameBtn.setOnAction(e->NewGameEv());
         pane2.getChildren().addAll(l1,l2,NewGameBtn);
 
         pane.getItems().addAll(pane1, pane2);
-
-
 
         root.getChildren().add(pane);
 
 
     }
-
-    public void InitialiseTwoDefaultPlayers()
-    {
-        game = new Game(1, gc);
-        //game.AddPlayers(new HumanPlayer(400, 400, 0, Color.GREEN, KeyCode.LEFT, KeyCode.RIGHT),
-        //        new HumanPlayer(100, 100, 0, Color.BLUE, KeyCode.A, KeyCode.D));
-    }
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -82,12 +73,10 @@ public class Main extends Application {
         Group root = new Group();
         MakeCanvasAndGraphicsContext(1000, 1000, root);
 
-        Scene sc = new Scene(root);
+        sc = new Scene(root);
         primaryStage.setScene(sc);
         primaryStage.show();
-        InitialiseTwoDefaultPlayers();
-        sc.setOnKeyReleased(new KeyReleased(game.getPlayers()));
-        sc.setOnKeyPressed(new KeyPressed(game.getPlayers()));
+        game = new Game(1, gc);
         SplitPane pane = new SplitPane();
         pane.setOrientation(Orientation.HORIZONTAL);
 
@@ -100,14 +89,15 @@ public class Main extends Application {
         Label l2=new Label("Tomek - 0");
 
         Button NewGameBtn= new Button("New Game");
-        NewGameBtn.setOnAction(new NewGameEvent(game));
+        NewGameBtn.setOnAction(e->NewGameEv());
         pane2.getChildren().addAll(l1,l2,NewGameBtn);
 
         pane.getItems().addAll(pane1, pane2);
 
-
-
         root.getChildren().add(pane);
-
+    }
+    public void NewGameEv()
+    {
+        NewGameWindow window = new NewGameWindow(game,sc);
     }
 }

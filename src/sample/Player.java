@@ -11,7 +11,7 @@ public class Player
     private int myID;
     private double x;
     private double y;
-    private static double velocity = 3;
+    private double velocity = 3;
     private double alpha;
     private Color color;
     private Boolean hasLost = false;
@@ -138,5 +138,7 @@ public class Player
         alpha=r.nextDouble()*Math.PI*2;
     }
 
-
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
 }
