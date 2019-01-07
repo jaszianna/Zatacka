@@ -1,6 +1,10 @@
 package sample.AddPlayer;
 
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,7 +14,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.HumanPlayer;
 import sample.Player;
 
@@ -79,18 +85,17 @@ public class AddPlayerWindow
         turnRightLabel.setLayoutX(30);
         turnRightLabel.setLayoutY(190);
 
-        Button submitButton = new Button();
-        submitButton.setText("Submit");
-        submitButton.setLayoutX(30);
-        submitButton.setLayoutY(240);
-        submitButton.setPrefSize(180,30);
-        submitButton.setOnAction(e->CloseWindowAndAddPalyerEv(primaryStage));
-
         Button cancelButton = new Button();
         cancelButton.setText("Cancel");
         cancelButton.setLayoutX(30);
         cancelButton.setLayoutY(290);
         cancelButton.setPrefSize(180,30);
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.close();
+            }
+        });
 
         Label leftKeyLabel = new Label();
         leftKeyLabel.setPrefSize(50,30);
@@ -99,7 +104,6 @@ public class AddPlayerWindow
         leftKeyLabel.setText("none");
         leftKeyLabel.setOnMouseClicked(e->PickKeyEv("Left",primaryStage,leftKeyLabel));
 
-
         Label rightKeyLabel = new Label();
         rightKeyLabel.setPrefSize(50,30);
         rightKeyLabel.setLayoutX(160);
@@ -107,7 +111,13 @@ public class AddPlayerWindow
         rightKeyLabel.setText("none");
         rightKeyLabel.setOnMouseClicked(e->PickKeyEv("Right",primaryStage,rightKeyLabel));
 
-
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+        submitButton.setLayoutX(30);
+        submitButton.setLayoutY(240);
+        submitButton.setPrefSize(180,30);
+        submitButton.setOnAction(e -> CloseWindowAndAddPalyerEv(primaryStage));
+        submitButton.disableProperty().bind(Bindings.isEmpty(textField.textProperty()));
         anchorPane.getChildren().addAll(colorPicker, textField, turnLeftLabel,
                 turnRightLabel, submitButton, cancelButton,
                 leftKeyLabel, rightKeyLabel);
@@ -115,6 +125,8 @@ public class AddPlayerWindow
         primaryStage.setTitle("New Player");
         primaryStage.setScene(new Scene(anchorPane));
         primaryStage.centerOnScreen();
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
 
@@ -128,13 +140,13 @@ public class AddPlayerWindow
 
     private void PickKeyEv(String Name,Stage stage, Label OwnerLabel)
     {
-        PickKeyWindow window=new PickKeyWindow(Name,stage,OwnerLabel, this);
+        PickKeyWindow window = new PickKeyWindow(Name,stage,OwnerLabel, this);
     }
 
     private void CloseWindowAndAddPalyerEv(Stage OwnerStage)
     {
-        Color c=this.getPicker().getValue();
-        String Name=this.getNameText().getText();
+        Color c = this.getPicker().getValue();
+        String Name = this.getNameText().getText();
 
         //TODO - Passing width and height from main window
 

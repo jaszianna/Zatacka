@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
@@ -9,10 +11,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -22,6 +29,8 @@ public class Main extends Application {
     private Scene scene;
     private Canvas canvas;
     private GraphicsContext graphicsContext;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
 
     @Override
@@ -35,24 +44,58 @@ public class Main extends Application {
         graphicsContext.setFill(Color.BLACK);
         graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        Button newGame = new Button("New Game");
-        newGame.setOnAction(e->NewGameEvent());
-        newGame.setLayoutY(60);
-        newGame.setLayoutX(1010);
+        Button newGameButton = new Button("New Game");
+        newGameButton.setOnAction(e -> NewGameEvent());
+        newGameButton.setLayoutY(900);
+        newGameButton.setLayoutX(1010);
+        newGameButton.setPrefSize(280, 40);
+
+        Button button = new Button();
+        button.setLayoutY(940);
+        button.setLayoutX(1010);
+        button.setPrefSize(280,40);
+        button.setText("Exit");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.close();
+            }
+        });
+
+        ListView listView = new ListView();
+        listView.setLayoutY(50);
+        listView.setLayoutX(1010);
+        listView.setPrefSize(280,300);
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        anchorPane.getChildren().addAll(canvas, newGame);
+        anchorPane.getChildren().addAll(canvas, newGameButton, listView, button);
 
         scene = new Scene(anchorPane);
+        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
 
         primaryStage.setTitle("Zatacka");
         primaryStage.setHeight(1000);
         primaryStage.setWidth(1300);
         primaryStage.setResizable(false);
         primaryStage.centerOnScreen();
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
+
 
         game = new Game(1, graphicsContext);
     }

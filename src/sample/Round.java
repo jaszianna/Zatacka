@@ -18,7 +18,7 @@ public class Round
 
     public Round(LinkedList<Player> activePlayers, GraphicsContext graphicsContext, int period)
     {
-        MoveTimerPeriod=period;
+        MoveTimerPeriod = period;
         this.activePlayers = (LinkedList<Player>) activePlayers.clone();
         gc = graphicsContext;
         gc.setFill(Color.BLACK);

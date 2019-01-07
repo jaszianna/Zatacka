@@ -7,12 +7,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.AddPlayer.AddPlayerWindow;
 
 public class NewGameWindow
@@ -72,11 +76,11 @@ public class NewGameWindow
         removePlayerButton.setLayoutY(550);
         removePlayerButton.disableProperty().bind(Bindings.isNull(listView.getSelectionModel().selectedItemProperty()));
 
-        Button button = new Button();
-        button.setText("Add Bot");
-        button.setPrefSize(130, 30);
-        button.setLayoutX(420);
-        button.setLayoutY(550);
+        Button addBotButton = new Button();
+        addBotButton.setText("Add Bot");
+        addBotButton.setPrefSize(130, 30);
+        addBotButton.setLayoutX(420);
+        addBotButton.setLayoutY(550);
 
         Label RoundsNumberLab = new Label("Round Count:");
         RoundsNumberLab.setLayoutX(50);
@@ -128,21 +132,34 @@ public class NewGameWindow
             }
         });
 
+        Button cancelButton = new Button("Close");
+        cancelButton.setLayoutY(840);
+        cancelButton.setLayoutX(50);
+        cancelButton.setPrefSize(500,40);
+        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.close();
+            }
+        });
+
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(addPlayerButton, listView, createGameButton,
                 RoundsNumberLab, roundsNumber, velocityLabel,
-                velocity, removePlayerButton, button);
+                velocity, removePlayerButton, addBotButton, cancelButton);
 
         primaryStage.setTitle("New Game");
         primaryStage.setScene(new Scene(anchorPane));
         primaryStage.centerOnScreen();
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
     }
     private void CreateGameEventHandler()
     {
         primaryStage.close();
         game.ClearProperties();
-        game.setStageCount(Integer.parseInt(roundsNumber.getText()));
+        game.setMaxStageCount(Integer.parseInt(roundsNumber.getText()));
         for(int i = 0; i < items.size(); i++)
         {
             items.get(i).setVelocity(Integer.parseInt(velocity.getText()));

@@ -21,10 +21,11 @@ public class KeyPressed implements EventHandler<KeyEvent>
 
     @Override
     public void handle(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER)
-        {
-            Paused=Paused==true?false:true;
-        }
+        //TODO - pause
+//        if(event.getCode() == KeyCode.ENTER)
+//        {
+//            Paused = Paused == true?false:true;
+//        }
         for(Player p:players)
         {
             if(event.getCode() == ((HumanPlayer)p).getLeft())
