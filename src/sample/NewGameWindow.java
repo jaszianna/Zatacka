@@ -36,6 +36,9 @@ public class NewGameWindow
         items = FXCollections.observableArrayList();
         items.add(new HumanPlayer("Tomek", 1000, 1000, Color.ALICEBLUE, KeyCode.LEFT, KeyCode.RIGHT));
         items.add(new HumanPlayer("Mikołaj", 1000, 1000, Color.CRIMSON, KeyCode.A, KeyCode.D));
+        items.add(new ComputerPlayer("Computer",1000,1000,Color.BLUE));
+
+
 
         primaryStage = new Stage();
         primaryStage.setResizable(false);

@@ -28,13 +28,14 @@ public class KeyPressed implements EventHandler<KeyEvent>
 //        }
         for(Player p:players)
         {
-            if(event.getCode() == ((HumanPlayer)p).getLeft())
+            if(p.getClass().getName()=="sample.HumanPlayer")
             {
-                ((HumanPlayer)p).setTurningLeft(true);
-            }
-            if(event.getCode() == ((HumanPlayer)p).getRight())
-            {
-                ((HumanPlayer)p).setTurningRight(true);
+                if (event.getCode() == ((HumanPlayer) p).getLeft()) {
+                    ((HumanPlayer) p).setTurningLeft(true);
+                }
+                if (event.getCode() == ((HumanPlayer) p).getRight()) {
+                    ((HumanPlayer) p).setTurningRight(true);
+                }
             }
         }
     }

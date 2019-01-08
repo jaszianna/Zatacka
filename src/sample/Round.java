@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Round
 {
     private LinkedList<Player> activePlayers;
-    public Boolean Marked[][];
+    public static Boolean Marked[][];
     private GraphicsContext gc;
     private LinkedBlockingQueue<Integer> queue;
     private int MoveTimerPeriod;
@@ -71,6 +71,11 @@ public class Round
     TimerTask makingAMove = new TimerTask() {
         public void run() {
             for (Player player : activePlayers) {
+                if(player.getClass().getName()=="sample.ComputerPlayer")
+                {
+                    ComputerPlayer p=(ComputerPlayer)player;
+                    p.Move();
+                }
                 if (!player.getHasLost()) {
                     player.setX(player.getX() + player.getVelocity()/10 * Math.cos(player.getAlpha()));
                     player.setY(player.getY() + player.getVelocity()/10 * Math.sin(player.getAlpha()));
@@ -81,7 +86,7 @@ public class Round
                             player.MarkOnTab(Marked, player.getX() + 5, player.getY() + 5, 5);
                         }
                     } catch (InterruptedException e) {
-                        // TO DO LATER
+                        // TODO LATER
                     }
                 }
             }
@@ -93,9 +98,9 @@ public class Round
         {
                 for (Player player : activePlayers)
                 {
-                    if(((HumanPlayer)player).getTurningLeft() == true)
+                    if(player.getTurningLeft() == true)
                         player.setAlpha(player.getAlpha() - Math.PI / 30);
-                    if(((HumanPlayer)player).getTurningRight() == true)
+                    if(player.getTurningRight() == true)
                         player.setAlpha(player.getAlpha() + Math.PI / 30);
                 }
         }

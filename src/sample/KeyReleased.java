@@ -17,13 +17,13 @@ public class KeyReleased implements EventHandler<KeyEvent>
     public void handle(KeyEvent event) {
         for(Player p:players)
         {
-            if(event.getCode()== ((HumanPlayer)p).getLeft())
-            {
-                ((HumanPlayer)p).setTurningLeft(false);
-            }
-            if(event.getCode()== ((HumanPlayer)p).getRight())
-            {
-                ((HumanPlayer)p).setTurningRight(false);
+            if(p.getClass().getName()=="sample.HumanPlayer") {
+                if (event.getCode() == ((HumanPlayer) p).getLeft()) {
+                    ((HumanPlayer) p).setTurningLeft(false);
+                }
+                if (event.getCode() == ((HumanPlayer) p).getRight()) {
+                    ((HumanPlayer) p).setTurningRight(false);
+                }
             }
         }
     }
