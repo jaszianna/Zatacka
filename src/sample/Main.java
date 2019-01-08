@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,10 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -31,7 +30,6 @@ public class Main extends Application {
     private GraphicsContext graphicsContext;
     private double xOffset = 0;
     private double yOffset = 0;
-
 
     @Override
     public void start(Stage primaryStage)
@@ -66,6 +64,19 @@ public class Main extends Application {
         listView.setLayoutY(50);
         listView.setLayoutX(1010);
         listView.setPrefSize(280,300);
+        listView.setCellFactory(param -> new ListCell<Player>()
+        {
+            @Override
+            protected void updateItem(Player item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null)
+                {
+                    setText(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -96,8 +107,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-
         game = new Game(1, graphicsContext);
+        listView.setItems(game.getHighscore());
     }
 
     public void NewGameEvent()

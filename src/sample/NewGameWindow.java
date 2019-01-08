@@ -2,13 +2,8 @@ package sample;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -26,10 +21,10 @@ public class NewGameWindow
     private Stage primaryStage;
     private Game game;
     private TextField roundsNumber;
-    private TextField velocity;
+    private Slider velocity;
     private Scene scene;
 
-    public NewGameWindow(Game g,Scene s)
+    public NewGameWindow(Game g, Scene s)
     {
         this.game = g;
         scene = s;
@@ -37,8 +32,6 @@ public class NewGameWindow
         items.add(new HumanPlayer("Tomek", 1000, 1000, Color.ALICEBLUE, KeyCode.LEFT, KeyCode.RIGHT));
         items.add(new HumanPlayer("Mikołaj", 1000, 1000, Color.CRIMSON, KeyCode.A, KeyCode.D));
         items.add(new ComputerPlayer("Computer",1000,1000,Color.BLUE));
-
-
 
         primaryStage = new Stage();
         primaryStage.setResizable(false);
@@ -70,7 +63,7 @@ public class NewGameWindow
         addPlayerButton.setPrefSize(130,30);
         addPlayerButton.setLayoutY(550);
         addPlayerButton.setLayoutX(50);
-        addPlayerButton.setOnAction(e->AddPlayerEventHandler());
+        addPlayerButton.setOnAction(event -> new AddPlayerWindow(items));
 
         Button removePlayerButton = new Button();
         removePlayerButton.setText("Remove");
@@ -78,6 +71,7 @@ public class NewGameWindow
         removePlayerButton.setLayoutX(235);
         removePlayerButton.setLayoutY(550);
         removePlayerButton.disableProperty().bind(Bindings.isNull(listView.getSelectionModel().selectedItemProperty()));
+        removePlayerButton.setOnAction(event -> items.remove(listView.getSelectionModel().getSelectedItem()));
 
         Button addBotButton = new Button();
         addBotButton.setText("Add Bot");
@@ -92,13 +86,9 @@ public class NewGameWindow
         roundsNumber = new TextField();
         roundsNumber.setLayoutX(50);
         roundsNumber.setLayoutY(620);
-        roundsNumber.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    roundsNumber.setText(newValue.replaceAll("[^\\d]", ""));
-                }
+        roundsNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                roundsNumber.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 
@@ -106,18 +96,18 @@ public class NewGameWindow
         velocityLabel.setLayoutX(50);
         velocityLabel.setLayoutY(660);
 
-        velocity = new TextField();
+        velocity = new Slider();
+        velocity.setPrefSize(500,50);
         velocity.setLayoutX(50);
         velocity.setLayoutY(680);
-        velocity.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    velocity.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
+        velocity.setMax(50);
+        velocity.setMin(10);
+        velocity.setSnapToTicks(true);
+        velocity.setBlockIncrement(10);
+        velocity.setShowTickLabels(true);
+        velocity.setShowTickMarks(true);
+        velocity.setMajorTickUnit(10);
+        velocity.setMinorTickCount(0);
 
         Button createGameButton = new Button("Create Game");
         createGameButton.setLayoutX(50);
@@ -126,12 +116,11 @@ public class NewGameWindow
         createGameButton.setOnAction(e -> CreateGameEventHandler());
         createGameButton.disableProperty().bind(new BooleanBinding() {
             {
-                super.bind(roundsNumber.textProperty(),
-                        velocity.textProperty());
+                super.bind(roundsNumber.textProperty());
             }
             @Override
             protected boolean computeValue() {
-                return roundsNumber.getText().isEmpty() || velocity.getText().isEmpty();
+                return roundsNumber.getText().isEmpty();
             }
         });
 
@@ -139,17 +128,13 @@ public class NewGameWindow
         cancelButton.setLayoutY(840);
         cancelButton.setLayoutX(50);
         cancelButton.setPrefSize(500,40);
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.close();
-            }
-        });
+        cancelButton.setOnAction(event -> primaryStage.close());
 
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(addPlayerButton, listView, createGameButton,
                 RoundsNumberLab, roundsNumber, velocityLabel,
-                velocity, removePlayerButton, addBotButton, cancelButton);
+                removePlayerButton, addBotButton,
+                velocity ,cancelButton);
 
         primaryStage.setTitle("New Game");
         primaryStage.setScene(new Scene(anchorPane));
@@ -160,12 +145,13 @@ public class NewGameWindow
     }
     private void CreateGameEventHandler()
     {
+        game.getHighscore().clear();
         primaryStage.close();
         game.ClearProperties();
         game.setMaxStageCount(Integer.parseInt(roundsNumber.getText()));
         for(int i = 0; i < items.size(); i++)
         {
-            items.get(i).setVelocity(Integer.parseInt(velocity.getText()));
+            items.get(i).setVelocity(velocity.getValue());
             game.AddPlayers(items.get(i));
         }
         scene.setOnKeyReleased(new KeyReleased(game.getPlayers()));
@@ -173,9 +159,4 @@ public class NewGameWindow
         Thread thread = new Thread(game);
         thread.start();
     }
-    private void AddPlayerEventHandler()
-    {
-        AddPlayerWindow window=new AddPlayerWindow(items);
-    }
-
 }

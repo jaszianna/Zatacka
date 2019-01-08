@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -12,9 +14,11 @@ public class Game implements Runnable
     private int maxStageCount;
     private int stageCount;
     private GraphicsContext gc;
+    private ObservableList<Player> highscore;
 
     public Game(int maxStageCount, GraphicsContext graphicsContext)
     {
+        highscore = FXCollections.observableArrayList();
         gc = graphicsContext;
         players = new LinkedList<Player>();
         this.maxStageCount = maxStageCount;
@@ -47,6 +51,7 @@ public class Game implements Runnable
         for (Player p: players)
         {
             this.players.add(p);
+            highscore.add(p);
         }
     }
     public Round getStage() {
@@ -66,5 +71,9 @@ public class Game implements Runnable
 
     public void setMaxStageCount(int maxStageCount) {
         this.maxStageCount = maxStageCount;
+    }
+
+    public ObservableList<Player> getHighscore() {
+        return highscore;
     }
 }

@@ -1,9 +1,7 @@
 package sample;
 
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 import java.util.List;
 
 public class KeyPressed implements EventHandler<KeyEvent>
@@ -28,13 +26,13 @@ public class KeyPressed implements EventHandler<KeyEvent>
 //        }
         for(Player p:players)
         {
-            if(p.getClass().getName()=="sample.HumanPlayer")
+            if(p.getClass().getName() == "sample.HumanPlayer")
             {
                 if (event.getCode() == ((HumanPlayer) p).getLeft()) {
-                    ((HumanPlayer) p).setTurningLeft(true);
+                    p.setTurningLeft(true);
                 }
                 if (event.getCode() == ((HumanPlayer) p).getRight()) {
-                    ((HumanPlayer) p).setTurningRight(true);
+                    p.setTurningRight(true);
                 }
             }
         }

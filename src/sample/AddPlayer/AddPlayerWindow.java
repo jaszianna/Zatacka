@@ -1,10 +1,8 @@
 package sample.AddPlayer;
 
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,8 +17,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.HumanPlayer;
 import sample.Player;
-
-
 
 public class AddPlayerWindow
 {
@@ -90,34 +86,39 @@ public class AddPlayerWindow
         cancelButton.setLayoutX(30);
         cancelButton.setLayoutY(290);
         cancelButton.setPrefSize(180,30);
-        cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.close();
-            }
-        });
+        cancelButton.setOnAction(event -> primaryStage.close());
 
         Label leftKeyLabel = new Label();
         leftKeyLabel.setPrefSize(50,30);
         leftKeyLabel.setLayoutX(160);
         leftKeyLabel.setLayoutY(140);
         leftKeyLabel.setText("none");
-        leftKeyLabel.setOnMouseClicked(e->PickKeyEv("Left",primaryStage,leftKeyLabel));
+        leftKeyLabel.setOnMouseClicked(e->PickKeyEv("Left", primaryStage, leftKeyLabel));
 
         Label rightKeyLabel = new Label();
         rightKeyLabel.setPrefSize(50,30);
         rightKeyLabel.setLayoutX(160);
         rightKeyLabel.setLayoutY(190);
         rightKeyLabel.setText("none");
-        rightKeyLabel.setOnMouseClicked(e->PickKeyEv("Right",primaryStage,rightKeyLabel));
+        rightKeyLabel.setOnMouseClicked(e->PickKeyEv("Right", primaryStage, rightKeyLabel));
 
         Button submitButton = new Button();
         submitButton.setText("Submit");
         submitButton.setLayoutX(30);
-        submitButton.setLayoutY(240);
+        submitButton.setLayoutY(260);
         submitButton.setPrefSize(180,30);
-        submitButton.setOnAction(e -> CloseWindowAndAddPalyerEv(primaryStage));
-        submitButton.disableProperty().bind(Bindings.isEmpty(textField.textProperty()));
+        submitButton.setOnAction(e -> CloseWindowAndAddPlayerEv(primaryStage));
+        submitButton.disableProperty().bind(new BooleanBinding() {
+            {
+                super.bind(textField.textProperty(), leftKeyLabel.textProperty(), rightKeyLabel.textProperty());
+            }
+            @Override
+            protected boolean computeValue() {
+                return textField.getText().isEmpty() || leftKeyLabel.getText().equals("none")
+                        || rightKeyLabel.getText().equals("none");
+            }
+        });
+
         anchorPane.getChildren().addAll(colorPicker, textField, turnLeftLabel,
                 turnRightLabel, submitButton, cancelButton,
                 leftKeyLabel, rightKeyLabel);
@@ -140,10 +141,10 @@ public class AddPlayerWindow
 
     private void PickKeyEv(String Name,Stage stage, Label OwnerLabel)
     {
-        PickKeyWindow window = new PickKeyWindow(Name,stage,OwnerLabel, this);
+        PickKeyWindow window = new PickKeyWindow(Name, stage, OwnerLabel, this);
     }
 
-    private void CloseWindowAndAddPalyerEv(Stage OwnerStage)
+    private void CloseWindowAndAddPlayerEv(Stage OwnerStage)
     {
         Color c = this.getPicker().getValue();
         String Name = this.getNameText().getText();

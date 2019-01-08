@@ -8,9 +8,6 @@ public class ComputerPlayer extends Player {
     private int RightTurnStack;
     private static Boolean[][] MarkedTab;
 
-
-
-
     public ComputerPlayer(String n, int width, int height, Color color) {
         super(n, width, height, color);
         LeftTurnStack=0;
