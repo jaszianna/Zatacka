@@ -1,4 +1,4 @@
-package sample;
+package zatacka;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -31,7 +31,7 @@ public class Round {
             p.SetRandomPosition((int) gc.getCanvas().getWidth(), (int) gc.getCanvas().getHeight());
             p.setHasLost(false);
         }
-        rand=new Random();
+        rand = new Random();
     }
 
     public LinkedList<Player> getActivePlayers() {
@@ -75,43 +75,40 @@ public class Round {
         public void run() {
 
 
-            double r=rand.nextDouble();
-            int Pickedindex=-1;
-            if(r<0.01)
-            {
-                Pickedindex=rand.nextInt(activePlayers.size());
+            double r = rand.nextDouble();
+            int Pickedindex = -1;
+            if (r < 0.01) {
+                Pickedindex = rand.nextInt(activePlayers.size());
             }
 
-            for (int i = 0 ; i < activePlayers.size(); i++ )
-            {
+            for (int i = 0; i < activePlayers.size(); i++) {
                 Player player = activePlayers.get(i);
 
-                if(i==Pickedindex){player.setPickedStack(10 + rand.nextInt(5)*3);}
-                if(player.getClass().getName()=="sample.ComputerPlayer")
-                {
-                    ComputerPlayer p=(ComputerPlayer)player;
+                if (i == Pickedindex) {
+                    player.setPickedStack(10 + rand.nextInt(5) * 3);
+                }
+                if (player.getClass().getName() == "zatacka.ComputerPlayer") {
+                    ComputerPlayer p = (ComputerPlayer) player;
                     p.Move();
                 }
                 if (!player.getHasLost()) {
-                    if (player.getPickedStack() > 0)
-                    {
+                    if (player.getPickedStack() > 0) {
                         gc.setFill(Color.BLACK);
                         gc.fillRoundRect(player.getX() + 5, player.getY() + 5, 10, 10, 10, 10);
                     }
                     player.setX(player.getX() + player.getVelocity() / 10 * Math.cos(player.getAlpha()));
                     player.setY(player.getY() + player.getVelocity() / 10 * Math.sin(player.getAlpha()));
                     gc.setFill(player.getColor());
-                        gc.fillRoundRect(player.getX() + 5, player.getY() + 5, 10, 10, 10, 10);
-                        try {
-                            if (!player.IfLose(Marked, player.getX() + 5, player.getY() + 5, 5, player.getAlpha())) {
-                                if (player.getPickedStack() <= 0)
-                                {
-                                    player.MarkOnTab(Marked, player.getX() + 5, player.getY() + 5, 5);
-                                }
-
+                    gc.fillRoundRect(player.getX() + 5, player.getY() + 5, 10, 10, 10, 10);
+                    try {
+                        if (!player.IfLose(Marked, player.getX() + 5, player.getY() + 5, 5, player.getAlpha())) {
+                            if (player.getPickedStack() <= 0) {
+                                player.MarkOnTab(Marked, player.getX() + 5, player.getY() + 5, 5);
                             }
-                        } catch (InterruptedException e) {
+
                         }
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
         }

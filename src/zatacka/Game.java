@@ -1,4 +1,4 @@
-package sample;
+package zatacka;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;

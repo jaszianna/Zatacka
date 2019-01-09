@@ -1,4 +1,4 @@
-package sample;
+package zatacka;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +11,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.*;
 import java.util.Comparator;
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package sample;
+package zatacka;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -26,7 +26,7 @@ public class KeyPressed implements EventHandler<KeyEvent>
 //        }
         for(Player p:players)
         {
-            if(p.getClass().getName() == "sample.HumanPlayer")
+            if(p.getClass().getName() == "zatacka.HumanPlayer")
             {
                 if (event.getCode() == ((HumanPlayer) p).getLeft()) {
                     ((HumanPlayer)(p)).setTurningLeft(true);

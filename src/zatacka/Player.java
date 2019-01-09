@@ -1,4 +1,4 @@
-package sample;
+package zatacka;
 
 import javafx.scene.paint.Color;
 

@@ -1,6 +1,5 @@
-package sample.AddPlayer;
+package zatacka;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,8 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.HumanPlayer;
-import sample.Player;
 
 public class AddPlayerWindow
 {

@@ -1,28 +1,21 @@
-package sample;
+package zatacka;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class Main extends Application {
+public class MainWindow extends Application {
 
     public static void main(String[] args) { launch(args ); }
 
@@ -75,6 +68,7 @@ public class Main extends Application {
                 {
                     setText(null);
                 } else {
+                    setTextFill(item.getColor());
                     setText(item.getName());
                 }
             }
