@@ -17,6 +17,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -63,7 +65,7 @@ public class Main extends Application {
         ListView listView = new ListView();
         listView.setLayoutY(50);
         listView.setLayoutX(1010);
-        listView.setPrefSize(280,300);
+        listView.setPrefSize(280,500);
         listView.setCellFactory(param -> new ListCell<Player>()
         {
             @Override
@@ -78,9 +80,16 @@ public class Main extends Application {
             }
         });
 
+        Label players = new Label();
+        players.setText("Players:");
+        players.prefWidth(100);
+        players.setFont(Font.font(18));
+        players.setLayoutX(1010);
+        players.setLayoutY(20);
+
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        anchorPane.getChildren().addAll(canvas, newGameButton, listView, button);
+        anchorPane.getChildren().addAll(canvas, newGameButton, listView, button, players);
 
         scene = new Scene(anchorPane);
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {

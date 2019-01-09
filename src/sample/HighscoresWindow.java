@@ -12,16 +12,19 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public class HighscoresWindow {
     public HighscoresWindow(LinkedList<Player> players) {
         Stage stage = new Stage();
+
         ObservableList<Player> items = FXCollections.observableArrayList();
         for (Player p : players
         ) {
             items.add(p);
         }
+
         TableView<Player> tableView = new TableView<>();
         tableView.setPrefSize(400, 600);
         tableView.setOnKeyPressed(event -> stage.close());
@@ -33,9 +36,11 @@ public class HighscoresWindow {
         TableColumn<Player, Integer> points = new TableColumn<>("Points");
         points.setCellValueFactory(new PropertyValueFactory<>("points"));
         points.setPrefWidth(150);
+        points.setComparator(Comparator.reverseOrder());
 
         tableView.getColumns().addAll(name, points);
         tableView.setItems(items);
+        tableView.getSortOrder().add(points);
 
         Pane pane = new Pane();
         pane.getChildren().add(tableView);
