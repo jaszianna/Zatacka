@@ -29,10 +29,10 @@ public class KeyPressed implements EventHandler<KeyEvent>
             if(p.getClass().getName() == "sample.HumanPlayer")
             {
                 if (event.getCode() == ((HumanPlayer) p).getLeft()) {
-                    p.setTurningLeft(true);
+                    ((HumanPlayer)(p)).setTurningLeft(true);
                 }
                 if (event.getCode() == ((HumanPlayer) p).getRight()) {
-                    p.setTurningRight(true);
+                    ((HumanPlayer)(p)).setTurningRight(true);
                 }
             }
         }

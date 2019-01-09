@@ -49,7 +49,7 @@ public class Round {
         Timer makeAMoveTimer = new Timer();
         Timer makingATurnTimer = new Timer();
         makingATurnTimer.schedule(makingATurn, 0, MoveTimerPeriod);
-        makeAMoveTimer.schedule(makingAMove, 0, 15);
+        makeAMoveTimer.schedule(makingAMove, 0, MoveTimerPeriod);
         while (activePlayers.size() > 1) {
             int msg = queue.take();
             for (int i = 0; i < activePlayers.size(); i++) {
@@ -62,6 +62,10 @@ public class Round {
                 activePlayers.get(i).AddPoint();
             }
         }
+        makeAMoveTimer.cancel();
+        makingATurnTimer.cancel();
+        activePlayers.get(0).RemoveLastPlayer();
+        Thread.sleep(2000);
     }
 
     TimerTask makingAMove = new TimerTask() {
@@ -83,8 +87,9 @@ public class Round {
                         if (!player.IfLose(Marked, player.getX() + 5, player.getY() + 5, 5, player.getAlpha())) {
                             player.MarkOnTab(Marked, player.getX() + 5, player.getY() + 5, 5);
                         }
-                    } catch (InterruptedException e) {
-                        // TODO LATER
+                    } catch (InterruptedException e)
+                    {
+                       int k = 2;
                     }
                 }
             }

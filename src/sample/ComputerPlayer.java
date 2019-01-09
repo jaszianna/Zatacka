@@ -36,6 +36,7 @@ public class ComputerPlayer extends Player {
     }
 
     public double ComputeMaximumLength(double xPos, double yPos, double angle, int width) {
+
         angle = -angle;
         MarkedTab = Round.Marked;
         double yxRatio = Math.tan(angle);
@@ -45,7 +46,6 @@ public class ComputerPlayer extends Player {
         } else {
             Xjump = -0.3;
         }
-
 
         double actxPos = xPos;
         double actyPos = yPos;
@@ -70,8 +70,7 @@ public class ComputerPlayer extends Player {
 
         Xjump = -Xjump;
 
-        while (Math.sqrt((SumXJumps) * (SumXJumps) + (SumYJumps) * (SumYJumps)) < 6)
-        {
+        while (Math.sqrt((SumXJumps) * (SumXJumps) + (SumYJumps) * (SumYJumps)) < 6) {
             actxLeftPos += Xjump;
             actxRightPos -= Xjump;
             actyLeftPos += Xjump * yxRatio;
@@ -82,13 +81,12 @@ public class ComputerPlayer extends Player {
 
         Xjump = -Xjump;
 
-
         while (true) {
 
             actxPos += Xjump;
             actyPos += Xjump * yxRatio;
-            actxLeftPos+=Xjump;
-            actxRightPos+=Xjump;
+            actxLeftPos += Xjump;
+            actxRightPos += Xjump;
             actyLeftPos += Xjump * yxRatio;
             actyRightPos += Xjump * yxRatio;
 
@@ -100,9 +98,11 @@ public class ComputerPlayer extends Player {
                     actxLeftPosOnTab >= MarkedTab.length || actxRightPosOnTab >= MarkedTab[0].length ||
                     actyRightPosOnTab >= MarkedTab.length || actyRightPosOnTab >= MarkedTab[0].length)
                 break;
-            if (MarkedTab[actxLeftPosOnTab][actyLeftPosOnTab] || MarkedTab[actxRightPosOnTab][actyRightPosOnTab] ) break;
+            if (MarkedTab[actxLeftPosOnTab][actyLeftPosOnTab] || MarkedTab[actxRightPosOnTab][actyRightPosOnTab])
+                break;
         }
         return Math.sqrt((actxPos - xPos) * (actxPos - xPos) + (actyPos - yPos) * (actyPos - yPos));
+
     }
 
     @Override
@@ -115,11 +115,6 @@ public class ComputerPlayer extends Player {
     }
 
     @Override
-    public void setTurningRight(Boolean turningRight) {
-
-    }
-
-    @Override
     public Boolean getTurningLeft() {
         if (RightTurnStack > 0) {
             RightTurnStack--;
@@ -128,8 +123,4 @@ public class ComputerPlayer extends Player {
         return false;
     }
 
-    @Override
-    public void setTurningLeft(Boolean turningLeft) {
-
-    }
 }

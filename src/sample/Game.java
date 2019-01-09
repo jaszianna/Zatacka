@@ -32,9 +32,10 @@ public class Game implements Runnable {
         while (stageCount != maxStageCount) {
             stage = new Round(players, gc, 15);
             try {
-                Thread.sleep(300);
+
                 stage.Play();
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 // TODO LATER
             }
             stageCount++;

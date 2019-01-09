@@ -7,16 +7,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public abstract class Player {
     static int maxID = 0;
-    protected int myID;
+    private int myID;
     protected double x;
     protected double y;
     protected double velocity = 3;
     protected double alpha;
-    protected Color color;
-    protected Boolean hasLost = false;
-    protected int points;
-    protected LinkedBlockingQueue<Integer> messageQueue;
-    protected String name;
+    private Color color;
+    private Boolean hasLost = false;
+    private int points;
+    private LinkedBlockingQueue<Integer> messageQueue;
+    private String name;
 
     public Player(String n, int width, int height, Color color) {
         name = n;
@@ -130,11 +130,12 @@ public abstract class Player {
         this.velocity = velocity;
     }
 
+    public void RemoveLastPlayer() throws InterruptedException {
+        hasLost = true;
+        messageQueue.put(myID);
+    }
+
     public abstract Boolean getTurningRight();
 
-    public abstract void setTurningRight(Boolean turningRight);
-
     public abstract Boolean getTurningLeft();
-
-    public abstract void setTurningLeft(Boolean turningLeft);
 }
