@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.AddPlayer.AddPlayerWindow;
 
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -81,6 +82,7 @@ public class NewGameWindow
         addBotButton.setPrefSize(130, 30);
         addBotButton.setLayoutX(420);
         addBotButton.setLayoutY(550);
+        addBotButton.setOnAction(event -> {items.add(new ComputerPlayer("Computer " + Player.maxID, 1000, 1000, ComputerPlayer.RandomColor()));});
 
         Label RoundsNumberLab = new Label("Round Count:");
         RoundsNumberLab.setLayoutX(50);
@@ -105,7 +107,7 @@ public class NewGameWindow
         velocity.setLayoutY(680);
         velocity.setMax(50);
         velocity.setMin(10);
-        //velocity.setSnapToTicks(true);
+        velocity.setSnapToTicks(true);
         velocity.setBlockIncrement(10);
         velocity.setShowTickLabels(true);
         velocity.setShowTickMarks(true);
