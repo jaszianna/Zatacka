@@ -66,9 +66,12 @@ public class Round {
 
     TimerTask makingAMove = new TimerTask() {
         public void run() {
-            for (Player player : activePlayers) {
-                if (player.getClass().getName() == "sample.ComputerPlayer") {
-                    ComputerPlayer p = (ComputerPlayer) player;
+            for (int i = 0 ; i < activePlayers.size(); i++ )
+            {
+                Player player = activePlayers.get(i);
+                if(player.getClass().getName()=="sample.ComputerPlayer")
+                {
+                    ComputerPlayer p=(ComputerPlayer)player;
                     p.Move();
                 }
                 if (!player.getHasLost()) {
