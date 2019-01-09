@@ -48,12 +48,7 @@ public class MainWindow extends Application {
         button.setLayoutX(1010);
         button.setPrefSize(280,40);
         button.setText("Exit");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.close();
-            }
-        });
+        button.setOnAction(event -> primaryStage.close());
 
         ListView listView = new ListView();
         listView.setLayoutY(50);

@@ -8,10 +8,6 @@ public class KeyPressed implements EventHandler<KeyEvent>
 {
     List<Player> players;
 
-    public Boolean getPaused() {
-        return Paused;
-    }
-    Boolean Paused=true;
     KeyPressed(List<Player> players)
     {
         this.players = players;
@@ -19,11 +15,6 @@ public class KeyPressed implements EventHandler<KeyEvent>
 
     @Override
     public void handle(KeyEvent event) {
-        //TODO - pause
-//        if(event.getCode() == KeyCode.ENTER)
-//        {
-//            Paused = Paused == true?false:true;
-//        }
         for(Player p:players)
         {
             if(p.getClass().getName() == "zatacka.HumanPlayer")

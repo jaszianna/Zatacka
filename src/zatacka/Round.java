@@ -73,17 +73,14 @@ public class Round {
 
     TimerTask makingAMove = new TimerTask() {
         public void run() {
-
-
             double r = rand.nextDouble();
             int Pickedindex = -1;
-            if (r < 0.01) {
+            if (r < 0.01)
+            {
                 Pickedindex = rand.nextInt(activePlayers.size());
             }
-
             for (int i = 0; i < activePlayers.size(); i++) {
                 Player player = activePlayers.get(i);
-
                 if (i == Pickedindex) {
                     player.setPickedStack(10 + rand.nextInt(5) * 3);
                 }
@@ -105,7 +102,6 @@ public class Round {
                             if (player.getPickedStack() <= 0) {
                                 player.MarkOnTab(Marked, player.getX() + 5, player.getY() + 5, 5);
                             }
-
                         }
                     } catch (InterruptedException e) {
                     }

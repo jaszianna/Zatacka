@@ -10,35 +10,30 @@ import java.util.LinkedList;
 
 public class Game implements Runnable {
     private LinkedList<Player> players;
-    private Round stage;
-    private int maxStageCount;
-    private int stageCount;
+    private Round round;
+    private int maxRoundCount;
+    private int roundCount;
     private GraphicsContext gc;
     private ObservableList<Player> highscore;
 
-    public Game(int maxStageCount, GraphicsContext graphicsContext) {
+    public Game(int maxRoundCount, GraphicsContext graphicsContext) {
         highscore = FXCollections.observableArrayList();
         gc = graphicsContext;
         players = new LinkedList<Player>();
-        this.maxStageCount = maxStageCount;
-        stageCount = 0;
-    }
-
-    public void setStageCount(int stageCount) {
-        this.stageCount = stageCount;
+        this.maxRoundCount = maxRoundCount;
+        roundCount = 0;
     }
 
     public void run() {
-        while (stageCount != maxStageCount) {
-            stage = new Round(players, gc, 15);
+        while (roundCount != maxRoundCount) {
+            round = new Round(players, gc, 15);
             try {
 
-                stage.Play();
+                round.Play();
             }
             catch (InterruptedException e) {
-                // TODO LATER
             }
-            stageCount++;
+            roundCount++;
         }
         Platform.runLater
                 (
@@ -55,24 +50,20 @@ public class Game implements Runnable {
         }
     }
 
-    public Round getStage() {
-        return stage;
-    }
-
     public LinkedList<Player> getPlayers() {
         return players;
     }
 
     public void ClearProperties() {
         players = new LinkedList<Player>();
-        stageCount = 0;
-        stage = null;
+        roundCount = 0;
+        round = null;
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
     }
 
-    public void setMaxStageCount(int maxStageCount) {
-        this.maxStageCount = maxStageCount;
+    public void setMaxRoundCount(int maxRoundCount) {
+        this.maxRoundCount = maxRoundCount;
     }
 
     public ObservableList<Player> getHighscore() {

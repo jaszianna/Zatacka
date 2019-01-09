@@ -12,32 +12,24 @@ import javafx.stage.StageStyle;
 
 public class PickKeyWindow {
 
-    private String Name;
-    private Stage OwnerStage;
-    private Label OwnerLabel;
-    private AddPlayerWindow OwnerWindow;
+    private String name;
+    private Stage ownerStage;
+    private Label ownerLabel;
+    private AddPlayerWindow ownerWindow;
 
 
     public PickKeyWindow(String name, Stage owner, Label l, AddPlayerWindow w)
     {
-        Name = name;
-        OwnerStage = owner;
-        OwnerLabel = l;
-        OwnerWindow = w;
+        this.name = name;
+        ownerStage = owner;
+        ownerLabel = l;
+        ownerWindow = w;
         InitializeWindow();
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
     }
 
     public void InitializeWindow()
     {
-        Label addKey = new Label("Chose your " + Name + " Key");
+        Label addKey = new Label("Chose your " + name + " Key");
         addKey.setTextAlignment(TextAlignment.CENTER);
         addKey.setFont(Font.font(16));
 
@@ -47,24 +39,24 @@ public class PickKeyWindow {
         Scene secondScene = new Scene(pane);
 
         Stage stage = new Stage();
-        stage.setTitle("Chosing " + Name + "Key");
+        stage.setTitle("Chosing " + name + "Key");
 
         secondScene.setOnKeyPressed(e -> KeyPickerEv(stage, e));
 
         stage.initStyle(StageStyle.UNDECORATED);
         stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(OwnerStage);
+        stage.initOwner(ownerStage);
         stage.setScene(secondScene);
         stage.centerOnScreen();
         stage.show();
     }
     private void KeyPickerEv(Stage window, KeyEvent event)
     {
-        if(Name == "Left")
-            OwnerWindow.setLeftKeyCode(event.getCode());
+        if(name == "Left")
+            ownerWindow.setLeftKeyCode(event.getCode());
         else
-            OwnerWindow.setRightKeyCode(event.getCode());
-        OwnerLabel.setText(event.getCode().getName());
+            ownerWindow.setRightKeyCode(event.getCode());
+        ownerLabel.setText(event.getCode().getName());
         window.close();
     }
 }

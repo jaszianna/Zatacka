@@ -1,7 +1,6 @@
 package zatacka;
 
 import javafx.scene.paint.Color;
-
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -119,10 +118,6 @@ public abstract class Player {
 
     public void AddPoint() {
         points += 1;
-    }
-
-    public void ResetPoints() {
-        points = 0;
     }
 
     public int getPoints() {

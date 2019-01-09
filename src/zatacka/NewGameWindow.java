@@ -31,7 +31,6 @@ public class NewGameWindow
         items.add(new HumanPlayer("Tomek", 1000, 1000, Color.GRAY, KeyCode.LEFT, KeyCode.RIGHT));
         items.add(new HumanPlayer("Mikołaj", 1000, 1000, Color.CRIMSON, KeyCode.A, KeyCode.D));
 
-
         primaryStage = new Stage();
         primaryStage.setResizable(false);
         primaryStage.setWidth(600);
@@ -148,7 +147,7 @@ public class NewGameWindow
         game.getHighscore().clear();
         primaryStage.close();
         game.ClearProperties();
-        game.setMaxStageCount(Integer.parseInt(roundsNumber.getText()));
+        game.setMaxRoundCount(Integer.parseInt(roundsNumber.getText()));
         for(int i = 0; i < items.size(); i++)
         {
             items.get(i).setVelocity(velocity.getValue());
