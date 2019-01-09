@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.AddPlayer.AddPlayerWindow;
 
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -34,10 +35,6 @@ public class NewGameWindow
         items = FXCollections.observableArrayList();
         items.add(new HumanPlayer("Tomek", 1000, 1000, Color.GRAY, KeyCode.LEFT, KeyCode.RIGHT));
         items.add(new HumanPlayer("Mikołaj", 1000, 1000, Color.CRIMSON, KeyCode.A, KeyCode.D));
-        items.add(new ComputerPlayer("Computer1",1000,1000,Color.BLUE));
-        items.add(new ComputerPlayer("Computer2",1000,1000,Color.YELLOW));
-        items.add(new ComputerPlayer("Computer3",1000,1000,Color.GREEN));
-        items.add(new ComputerPlayer("Computer4",1000,1000,Color.ORANGE));
 
         primaryStage = new Stage();
         primaryStage.setResizable(false);
@@ -84,6 +81,7 @@ public class NewGameWindow
         addBotButton.setPrefSize(130, 30);
         addBotButton.setLayoutX(420);
         addBotButton.setLayoutY(550);
+        addBotButton.setOnAction(event -> {items.add(new ComputerPlayer("Computer " + Player.maxID, 1000, 1000, ComputerPlayer.RandomColor()));});
 
         Label RoundsNumberLab = new Label("Round Count:");
         RoundsNumberLab.setLayoutX(50);

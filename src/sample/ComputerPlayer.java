@@ -2,6 +2,8 @@ package sample;
 
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 public class ComputerPlayer extends Player {
 
     private int LeftTurnStack;
@@ -13,6 +15,15 @@ public class ComputerPlayer extends Player {
         LeftTurnStack = 0;
         RightTurnStack = 0;
         MarkedTab = Round.Marked;
+    }
+
+    public static Color RandomColor()
+    {
+        Random random = new Random();
+        int R = random.nextInt(255);
+        int G = random.nextInt(255);
+        int B = random.nextInt(255);
+        return Color.rgb(R,G,B);
     }
 
     public void Move() {
