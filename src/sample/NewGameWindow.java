@@ -34,10 +34,7 @@ public class NewGameWindow
         items = FXCollections.observableArrayList();
         items.add(new HumanPlayer("Tomek", 1000, 1000, Color.GRAY, KeyCode.LEFT, KeyCode.RIGHT));
         items.add(new HumanPlayer("Mikołaj", 1000, 1000, Color.CRIMSON, KeyCode.A, KeyCode.D));
-//        items.add(new ComputerPlayer("Computer1",1000,1000,Color.BLUE));
-//        items.add(new ComputerPlayer("Computer2",1000,1000,Color.YELLOW));
-//        items.add(new ComputerPlayer("Computer3",1000,1000,Color.GREEN));
-//        items.add(new ComputerPlayer("Computer4",1000,1000,Color.ORANGE));
+
 
         primaryStage = new Stage();
         primaryStage.setResizable(false);
@@ -108,7 +105,7 @@ public class NewGameWindow
         velocity.setLayoutY(680);
         velocity.setMax(50);
         velocity.setMin(10);
-        velocity.setSnapToTicks(true);
+        //velocity.setSnapToTicks(true);
         velocity.setBlockIncrement(10);
         velocity.setShowTickLabels(true);
         velocity.setShowTickMarks(true);

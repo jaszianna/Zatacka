@@ -17,6 +17,16 @@ public abstract class Player {
     private int points;
     private LinkedBlockingQueue<Integer> messageQueue;
     private String name;
+    private int PickedStack;
+
+    public int getPickedStack() {
+        if(PickedStack>0)PickedStack--;
+        return PickedStack;
+    }
+
+    public void setPickedStack(int pickedStack) {
+        PickedStack = pickedStack;
+    }
 
     public Player(String n, int width, int height, Color color) {
         name = n;
