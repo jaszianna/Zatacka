@@ -59,7 +59,7 @@ public class AddPlayerWindow
         anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 
         textField = new TextField();
-        textField.setPromptText("Name:");
+        textField.setPromptText("name:");
         textField.setPrefSize(180, 30);
         textField.setLayoutX(30);
         textField.setLayoutY(40);
@@ -93,14 +93,14 @@ public class AddPlayerWindow
         leftKeyLabel.setLayoutX(160);
         leftKeyLabel.setLayoutY(140);
         leftKeyLabel.setText("none");
-        leftKeyLabel.setOnMouseClicked(e->PickKeyEv("Left", primaryStage, leftKeyLabel));
+        leftKeyLabel.setOnMouseClicked(e -> PickKeyEv("Left", primaryStage, leftKeyLabel));
 
         Label rightKeyLabel = new Label();
         rightKeyLabel.setPrefSize(50,30);
         rightKeyLabel.setLayoutX(160);
         rightKeyLabel.setLayoutY(190);
         rightKeyLabel.setText("none");
-        rightKeyLabel.setOnMouseClicked(e->PickKeyEv("Right", primaryStage, rightKeyLabel));
+        rightKeyLabel.setOnMouseClicked(e -> PickKeyEv("Right", primaryStage, rightKeyLabel));
 
         Button submitButton = new Button();
         submitButton.setText("Submit");

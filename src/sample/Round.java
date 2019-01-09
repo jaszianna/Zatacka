@@ -8,34 +8,33 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Round
-{
+public class Round {
     private LinkedList<Player> activePlayers;
     public static Boolean Marked[][];
     private GraphicsContext gc;
     private LinkedBlockingQueue<Integer> queue;
     private int MoveTimerPeriod;
 
-    public Round(LinkedList<Player> activePlayers, GraphicsContext graphicsContext, int period)
-    {
+    public Round(LinkedList<Player> activePlayers, GraphicsContext graphicsContext, int period) {
+
         MoveTimerPeriod = period;
         this.activePlayers = (LinkedList<Player>) activePlayers.clone();
         gc = graphicsContext;
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-        MakeMarkedTab((int)gc.getCanvas().getWidth(), (int)gc.getCanvas().getHeight());
+        MakeMarkedTab((int) gc.getCanvas().getWidth(), (int) gc.getCanvas().getHeight());
         queue = new LinkedBlockingQueue<Integer>();
-        for (Player p:activePlayers)
-        {
+        for (Player p : activePlayers) {
             p.AddMessageQueue(queue);
-            p.SetRandomPosition((int)gc.getCanvas().getWidth(), (int)gc.getCanvas().getHeight());
+            p.SetRandomPosition((int) gc.getCanvas().getWidth(), (int) gc.getCanvas().getHeight());
             p.setHasLost(false);
         }
     }
-    public LinkedList<Player> getActivePlayers()
-    {
+
+    public LinkedList<Player> getActivePlayers() {
         return activePlayers;
     }
+
     public void MakeMarkedTab(int width, int height) {
         Marked = new Boolean[width][];
         for (int i = 0; i < width; i++) {
@@ -45,24 +44,21 @@ public class Round
             }
         }
     }
+
     public void Play() throws InterruptedException {
         Timer makeAMoveTimer = new Timer();
         Timer makingATurnTimer = new Timer();
         makingATurnTimer.schedule(makingATurn, 0, MoveTimerPeriod);
         makeAMoveTimer.schedule(makingAMove, 0, 15);
-        while(activePlayers.size() > 0)
-        {
+        while (activePlayers.size() > 1) {
             int msg = queue.take();
-            for (int i = 0; i < activePlayers.size(); i++)
-            {
-                if (activePlayers.get(i).getMyID() == msg)
-                {
+            for (int i = 0; i < activePlayers.size(); i++) {
+                if (activePlayers.get(i).getMyID() == msg) {
                     activePlayers.remove(i);
                     break;
                 }
             }
-            for (int i = 0; i < activePlayers.size(); i++)
-            {
+            for (int i = 0; i < activePlayers.size(); i++) {
                 activePlayers.get(i).AddPoint();
             }
         }
@@ -71,14 +67,13 @@ public class Round
     TimerTask makingAMove = new TimerTask() {
         public void run() {
             for (Player player : activePlayers) {
-                if(player.getClass().getName()=="sample.ComputerPlayer")
-                {
-                    ComputerPlayer p=(ComputerPlayer)player;
+                if (player.getClass().getName() == "sample.ComputerPlayer") {
+                    ComputerPlayer p = (ComputerPlayer) player;
                     p.Move();
                 }
                 if (!player.getHasLost()) {
-                    player.setX(player.getX() + player.getVelocity()/10 * Math.cos(player.getAlpha()));
-                    player.setY(player.getY() + player.getVelocity()/10 * Math.sin(player.getAlpha()));
+                    player.setX(player.getX() + player.getVelocity() / 10 * Math.cos(player.getAlpha()));
+                    player.setY(player.getY() + player.getVelocity() / 10 * Math.sin(player.getAlpha()));
                     gc.setFill(player.getColor());
                     gc.fillRoundRect(player.getX() + 5, player.getY() + 5, 10, 10, 10, 10);
                     try {
@@ -92,17 +87,14 @@ public class Round
             }
         }
     };
-    TimerTask makingATurn = new TimerTask()
-    {
-        public void run()
-        {
-                for (Player player : activePlayers)
-                {
-                    if(player.getTurningLeft() == true)
-                        player.setAlpha(player.getAlpha() - Math.PI / 30);
-                    if(player.getTurningRight() == true)
-                        player.setAlpha(player.getAlpha() + Math.PI / 30);
-                }
+    TimerTask makingATurn = new TimerTask() {
+        public void run() {
+            for (Player player : activePlayers) {
+                if (player.getTurningLeft() == true)
+                    player.setAlpha(player.getAlpha() - Math.PI / 30);
+                if (player.getTurningRight() == true)
+                    player.setAlpha(player.getAlpha() + Math.PI / 30);
+            }
         }
     };
 }

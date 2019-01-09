@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.canvas.GraphicsContext;
@@ -7,8 +8,7 @@ import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
 
-public class Game implements Runnable
-{
+public class Game implements Runnable {
     private LinkedList<Player> players;
     private Round stage;
     private int maxStageCount;
@@ -16,8 +16,7 @@ public class Game implements Runnable
     private GraphicsContext gc;
     private ObservableList<Player> highscore;
 
-    public Game(int maxStageCount, GraphicsContext graphicsContext)
-    {
+    public Game(int maxStageCount, GraphicsContext graphicsContext) {
         highscore = FXCollections.observableArrayList();
         gc = graphicsContext;
         players = new LinkedList<Player>();
@@ -29,39 +28,41 @@ public class Game implements Runnable
         this.stageCount = stageCount;
     }
 
-    public void run()
-    {
-        while(stageCount != maxStageCount)
-        {
-            stage = new Round(players, gc,15);
-            try
-            {
+    public void run() {
+        while (stageCount != maxStageCount) {
+            stage = new Round(players, gc, 15);
+            try {
                 Thread.sleep(300);
                 stage.Play();
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 // TODO LATER
             }
             stageCount++;
         }
+        Platform.runLater
+                (
+                        () -> {
+                            HighscoresWindow highscoresWindow = new HighscoresWindow(players);
+                        }
+                );
     }
-    public void AddPlayers(Player... players)
-    {
-        for (Player p: players)
-        {
+
+    public void AddPlayers(Player... players) {
+        for (Player p : players) {
             this.players.add(p);
             highscore.add(p);
         }
     }
+
     public Round getStage() {
         return stage;
     }
 
-    public LinkedList<Player> getPlayers() { return players; }
+    public LinkedList<Player> getPlayers() {
+        return players;
+    }
 
-    public void ClearProperties()
-    {
+    public void ClearProperties() {
         players = new LinkedList<Player>();
         stageCount = 0;
         stage = null;

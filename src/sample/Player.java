@@ -16,10 +16,10 @@ public abstract class Player {
     protected Boolean hasLost = false;
     protected int points;
     protected LinkedBlockingQueue<Integer> messageQueue;
-    protected String Name;
+    protected String name;
 
     public Player(String n, int width, int height, Color color) {
-        Name = n;
+        name = n;
         myID = maxID;
         maxID += 1;
         SetRandomPosition(width, height);
@@ -29,7 +29,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public int getMyID() {
