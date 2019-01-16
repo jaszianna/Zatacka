@@ -135,7 +135,7 @@ public class NewGameWindow
             }
             @Override
             protected boolean computeValue() {
-                return roundsNumber.getText().isEmpty() || listView.getItems().isEmpty();
+                return roundsNumber.getText().isEmpty() || listView.getItems().size() < 2;
             }
         });
 
