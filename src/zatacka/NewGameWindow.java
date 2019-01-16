@@ -28,8 +28,6 @@ public class NewGameWindow
         this.game = g;
         scene = s;
         items = FXCollections.observableArrayList();
-        items.add(new HumanPlayer("Tomek", 1000, 1000, Color.GRAY, KeyCode.LEFT, KeyCode.RIGHT));
-        items.add(new HumanPlayer("Mikołaj", 1000, 1000, Color.CRIMSON, KeyCode.A, KeyCode.D));
 
         primaryStage = new Stage();
         primaryStage.setResizable(false);
@@ -61,6 +59,15 @@ public class NewGameWindow
         addPlayerButton.setPrefSize(130,30);
         addPlayerButton.setLayoutY(550);
         addPlayerButton.setLayoutX(50);
+        addPlayerButton.disableProperty().bind(new BooleanBinding() {
+            {
+                super.bind(listView.getItems());
+            }
+            @Override
+            protected boolean computeValue() {
+                return listView.getItems().size() > 20;
+            }
+        });
         addPlayerButton.setOnAction(event -> new AddPlayerWindow(items));
 
         Button removePlayerButton = new Button();
@@ -76,6 +83,15 @@ public class NewGameWindow
         addBotButton.setPrefSize(130, 30);
         addBotButton.setLayoutX(420);
         addBotButton.setLayoutY(550);
+        addBotButton.disableProperty().bind(new BooleanBinding() {
+        {
+            super.bind(listView.getItems());
+        }
+        @Override
+        protected boolean computeValue() {
+            return listView.getItems().size() > 20;
+        }
+        });
         addBotButton.setOnAction(event -> {items.add(new ComputerPlayer("Computer " + Player.maxID, 1000, 1000, ComputerPlayer.RandomColor()));});
 
         Label RoundsNumberLab = new Label("Round Count:");
@@ -115,11 +131,11 @@ public class NewGameWindow
         createGameButton.setOnAction(e -> CreateGameEventHandler());
         createGameButton.disableProperty().bind(new BooleanBinding() {
             {
-                super.bind(roundsNumber.textProperty());
+                super.bind(roundsNumber.textProperty(), listView.getItems());
             }
             @Override
             protected boolean computeValue() {
-                return roundsNumber.getText().isEmpty();
+                return roundsNumber.getText().isEmpty() || listView.getItems().isEmpty();
             }
         });
 

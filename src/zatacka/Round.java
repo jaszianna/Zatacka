@@ -82,7 +82,7 @@ public class Round {
             for (int i = 0; i < activePlayers.size(); i++) {
                 Player player = activePlayers.get(i);
                 if (i == Pickedindex) {
-                    player.setPickedStack(10 + rand.nextInt(5) * 3);
+                    player.setPickedStack(10 + rand.nextInt(5) * 5);
                 }
                 if (player.getClass().getName() == "zatacka.ComputerPlayer") {
                     ComputerPlayer p = (ComputerPlayer) player;

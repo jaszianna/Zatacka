@@ -57,7 +57,6 @@ public class ComputerPlayer extends Player {
         } else {
             Xjump = -0.3;
         }
-
         double actxPos = xPos;
         double actyPos = yPos;
 

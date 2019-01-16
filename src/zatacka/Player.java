@@ -86,7 +86,7 @@ public abstract class Player {
     }
 
     public Boolean IfLose(Boolean[][] Marked, double x, double y, double width, double Alpha) throws InterruptedException {
-        for (double beta = Alpha - Math.PI / 4; beta < Alpha + Math.PI / 4; beta += Math.PI / 10) {
+        for (double beta = Alpha - Math.PI / 9; beta < Alpha + Math.PI / 9; beta += Math.PI / 9) {
             double x1 = x + width * Math.cos(beta);
             double y1 = y + width * Math.sin(beta);
             if (x1 <= 0 || y1 <= 0 || x1 >= Marked.length - 1 || y1 >= Marked[0].length - 1 || Marked[(int) Math.round(x1)][(int) Math.round(y1)]) {
