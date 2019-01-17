@@ -23,6 +23,7 @@ public class MainWindow extends Application {
     private Scene scene;
     private Canvas canvas;
     private GraphicsContext graphicsContext;
+    private Thread thread;
     private double xOffset = 0;
     private double yOffset = 0;
 
@@ -76,9 +77,21 @@ public class MainWindow extends Application {
         players.setLayoutX(1010);
         players.setLayoutY(20);
 
+        Button button1 = new Button("Stop");
+        button1.setLayoutY(700);
+        button1.setLayoutX(1100);
+        button1.setPrefSize(100,100);
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                game.stop();
+            }
+        });
+
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        anchorPane.getChildren().addAll(canvas, newGameButton, listView, button, players);
+        anchorPane.getChildren().addAll(canvas, newGameButton, listView, button, players, button1);
 
         scene = new Scene(anchorPane);
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {

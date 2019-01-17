@@ -13,6 +13,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.swing.text.html.parser.Parser;
+
 public class NewGameWindow
 {
     private ObservableList<Player> items;
@@ -135,7 +137,16 @@ public class NewGameWindow
             }
             @Override
             protected boolean computeValue() {
-                return roundsNumber.getText().isEmpty() || listView.getItems().size() < 2;
+                int i;
+                try
+                {
+                    i = Integer.parseInt(roundsNumber.getText());
+                }
+                catch (Exception e)
+                {
+                    return true;
+                }
+                return i < 1 || listView.getItems().size() < 2;
             }
         });
 
